@@ -121,50 +121,12 @@ class _HomeContent extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
-              GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ScanScreen())),
-                child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.goldGradient,
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.gold.withValues(alpha: 00.3),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        right: -20,
-                        top: -20,
-                        child: Icon(Icons.monetization_on, size: 150, color: Colors.white.withValues(alpha: 0.2)),
-                      ),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.camera_alt, size: 50, color: Colors.white),
-                            const SizedBox(height: 16),
-                            Text(
-                              'Scan Coin',
-                              style: GoogleFonts.poppins(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              const SizedBox(height: 30),
+              _buildHeroSection(context),
+              const SizedBox(height: 24),
+              _buildStatsRow(),
+              const SizedBox(height: 24),
+              _buildFeaturedCoin(context),
               const SizedBox(height: 30),
               Text(
                 'Quick Actions',
@@ -179,6 +141,156 @@ class _HomeContent extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildHeroSection(BuildContext context) {
+    return Container(
+      height: 220,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppColors.gold, Color(0xFFD4AF37), Color(0xFFF4C430)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(color: AppColors.gold.withValues(alpha: 0.4), blurRadius: 25, offset: const Offset(0, 12)),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned(right: -30, top: -30, child: Icon(Icons.monetization_on, size: 180, color: Colors.white.withValues(alpha: 0.15))),
+          Positioned(left: -20, bottom: -20, child: Icon(Icons.diamond, size: 120, color: Colors.white.withValues(alpha: 0.1))),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.25), borderRadius: BorderRadius.circular(20)),
+                      child: Row(
+                        children: [
+                          Icon(Icons.auto_awesome, size: 14, color: Colors.white),
+                          const SizedBox(width: 4),
+                          Text('AI Powered', style: GoogleFonts.poppins(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w600)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Text('Identify Any Coin', style: GoogleFonts.poppins(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white)),
+                const SizedBox(height: 8),
+                Text('Instant recognition with 98% accuracy', style: GoogleFonts.poppins(fontSize: 13, color: Colors.white.withValues(alpha: 0.95))),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ScanScreen())),
+                        icon: const Icon(Icons.camera_alt, size: 20),
+                        label: Text('Scan Now', style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: AppColors.gold,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          elevation: 0,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Container(
+                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.25), borderRadius: BorderRadius.circular(12)),
+                      child: IconButton(
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ScanHistoryScreen())),
+                        icon: const Icon(Icons.history, color: Colors.white, size: 24),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatsRow() {
+    return Row(
+      children: [
+        Expanded(child: _buildStatCard('2.5K+', 'Coins Scanned', Icons.qr_code_scanner, Colors.blue)),
+        const SizedBox(width: 12),
+        Expanded(child: _buildStatCard('98%', 'Accuracy', Icons.verified, Colors.green)),
+        const SizedBox(width: 12),
+        Expanded(child: _buildStatCard('150+', 'Countries', Icons.public, Colors.orange)),
+      ],
+    );
+  }
+
+  Widget _buildStatCard(String value, String label, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: color, size: 28),
+          const SizedBox(height: 8),
+          Text(value, style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+          Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppColors.textGray), textAlign: TextAlign.center),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeaturedCoin(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.deepPurple.shade700, Colors.deepPurple.shade900],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [BoxShadow(color: Colors.deepPurple.withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 10))],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 70,
+            height: 70,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Center(child: Text('💎', style: TextStyle(fontSize: 40))),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Coin of the Day', style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withValues(alpha: 0.8))),
+                const SizedBox(height: 4),
+                Text('1933 Double Eagle', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                const SizedBox(height: 4),
+                Text('Worth \$18.9 Million', style: GoogleFonts.poppins(fontSize: 13, color: Colors.amber.shade200, fontWeight: FontWeight.w600)),
+              ],
+            ),
+          ),
+          Icon(Icons.arrow_forward_ios, color: Colors.white, size: 20),
+        ],
       ),
     );
   }
