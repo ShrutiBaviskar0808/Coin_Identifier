@@ -38,20 +38,34 @@ class HelpScreen extends StatelessWidget {
 
   Widget _buildContactCard(String title, String contact, String availability, IconData icon, Color color) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+        gradient: LinearGradient(
+          colors: [Colors.white, color.withValues(alpha: 0.05)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
+        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.2), blurRadius: 15, offset: const Offset(0, 5))],
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(color: color.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
-            child: Icon(icon, color: color, size: 28),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.4),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Icon(icon, color: Colors.white, size: 28),
           ),
           const SizedBox(width: 16),
           Expanded(

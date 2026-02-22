@@ -31,13 +31,19 @@ class PrivacyScreen extends StatelessWidget {
   }
 
   Widget _buildSection(String title, IconData icon, String content) {
+    final colors = _getSectionColor(title);
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+        gradient: LinearGradient(
+          colors: [Colors.white, colors[0].withValues(alpha: 0.05)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: colors[0].withValues(alpha: 0.2), width: 1.5),
+        boxShadow: [BoxShadow(color: colors[0].withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,18 +51,38 @@ class PrivacyScreen extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(color: AppColors.lightGold.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
-                child: Icon(icon, color: AppColors.gold, size: 24),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: colors),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colors[0].withValues(alpha: 0.4),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Icon(icon, color: Colors.white, size: 24),
               ),
               const SizedBox(width: 12),
               Expanded(child: Text(title, style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark))),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           Text(content, style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textDark, height: 1.6), textAlign: TextAlign.justify),
         ],
       ),
     );
+  }
+
+  List<Color> _getSectionColor(String title) {
+    if (title.contains('Data')) return [Colors.blue, Colors.blue.shade700];
+    if (title.contains('Camera')) return [Colors.green, Colors.green.shade700];
+    if (title.contains('Location')) return [Colors.orange, Colors.orange.shade700];
+    if (title.contains('Third')) return [Colors.purple, Colors.purple.shade700];
+    if (title.contains('Retention')) return [Colors.teal, Colors.teal.shade700];
+    if (title.contains('Account')) return [Colors.red, Colors.red.shade700];
+    return [AppColors.gold, AppColors.lightGold];
   }
 }

@@ -15,69 +15,79 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              children: [
-                Text(
-                  'Profile',
-                  style: GoogleFonts.poppins(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textDark,
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [AppColors.gold, AppColors.lightGold],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
                   ),
                 ),
-                const SizedBox(height: 40),
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: AppColors.goldGradient,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.gold.withValues(alpha: 0.3),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Profile', style: GoogleFonts.poppins(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
+                        IconButton(
+                          icon: const Icon(Icons.settings, color: Colors.white),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.2),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: const Icon(Icons.person, size: 50, color: Colors.white),
+                      child: Icon(Icons.person, size: 50, color: AppColors.gold),
+                    ),
+                    const SizedBox(height: 16),
+                    Text('Coin Collector', style: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+                    const SizedBox(height: 4),
+                    Text('collector@coinapp.com', style: GoogleFonts.poppins(fontSize: 14, color: Colors.white.withValues(alpha: 0.9))),
+                    const SizedBox(height: 20),
+                    _buildStatsRow(),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                Text(
-                  'Coin Collector',
-                  style: GoogleFonts.poppins(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textDark,
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: [
+                    _buildMenuItem(Icons.emoji_events, 'Achievements', 'View your milestones', Colors.amber, () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const AchievementsScreen()));
+                    }),
+                    _buildMenuItem(Icons.security, 'Privacy & Security', 'Manage your privacy', Colors.blue, () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const PrivacyScreen()));
+                    }),
+                    _buildMenuItem(Icons.help_outline, 'Help & Support', 'Get assistance', Colors.green, () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const HelpScreen()));
+                    }),
+                    _buildMenuItem(Icons.info_outline, 'About', 'App information', Colors.purple, () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutScreen()));
+                    }),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'collector@coinapp.com',
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    color: AppColors.textGray,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                _buildStatsRow(),
-                const SizedBox(height: 30),
-                _buildMenuItem(Icons.emoji_events, 'Achievements', () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AchievementsScreen()));
-                }),
-                _buildMenuItem(Icons.security, 'Privacy & Security', () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const PrivacyScreen()));
-                }),
-                _buildMenuItem(Icons.help_outline, 'Help & Support', () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const HelpScreen()));
-                }),
-                _buildMenuItem(Icons.info_outline, 'About', () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutScreen()));
-                }),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -100,80 +110,74 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.white.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: Colors.white.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
-          Icon(icon, color: AppColors.gold, size: 24),
+          Icon(icon, color: Colors.white, size: 24),
           const SizedBox(height: 8),
-          Text(
-            value,
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textDark,
-            ),
-          ),
-          Text(
-            label,
-            style: GoogleFonts.poppins(
-              fontSize: 12,
-              color: AppColors.textGray,
-            ),
-          ),
+          Text(value, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
+          Text(label, style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withValues(alpha: 0.9))),
         ],
       ),
     );
   }
 
-  Widget _buildMenuItem(IconData icon, String title, VoidCallback onTap) {
+  Widget _buildMenuItem(IconData icon, String title, String subtitle, Color color, VoidCallback onTap) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 16),
       child: InkWell(
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 3),
-              ),
-            ],
+            gradient: LinearGradient(
+              colors: [Colors.white, color.withValues(alpha: 0.05)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: color.withValues(alpha: 0.2), width: 1.5),
+            boxShadow: [BoxShadow(color: color.withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
           ),
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: AppColors.lightGold.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
+                  gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: color.withValues(alpha: 0.4),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
                 ),
-                child: Icon(icon, color: AppColors.gold, size: 22),
+                child: Icon(icon, color: Colors.white, size: 24),
               ),
               const SizedBox(width: 16),
               Expanded(
-                child: Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textDark,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+                    const SizedBox(height: 2),
+                    Text(subtitle, style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textGray)),
+                  ],
                 ),
               ),
-              Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.textGray),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(Icons.arrow_forward_ios, size: 16, color: color),
+              ),
             ],
           ),
         ),
