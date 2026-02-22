@@ -20,7 +20,8 @@ class SavedCoinsScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: savedCoins.isEmpty
+      body: SafeArea(
+        child: savedCoins.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -85,6 +86,7 @@ class SavedCoinsScreen extends StatelessWidget {
                 );
               },
             ),
+      ),
     );
   }
 }

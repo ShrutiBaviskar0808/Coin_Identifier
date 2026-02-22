@@ -21,7 +21,8 @@ class ScanHistoryScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: history.isEmpty
+      body: SafeArea(
+        child: history.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -83,6 +84,7 @@ class ScanHistoryScreen extends StatelessWidget {
                 );
               },
             ),
+      ),
     );
   }
 }
