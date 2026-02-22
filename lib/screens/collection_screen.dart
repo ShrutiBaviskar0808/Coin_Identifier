@@ -91,51 +91,77 @@ class _CollectionScreenState extends State<CollectionScreen> {
                               ),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
+                                  gradient: LinearGradient(
+                                    colors: [Colors.white, AppColors.lightGold.withValues(alpha: 0.1)],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(24),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.05),
-                                      blurRadius: 15,
-                                      offset: const Offset(0, 5),
+                                      color: AppColors.gold.withValues(alpha: 0.2),
+                                      blurRadius: 20,
+                                      offset: const Offset(0, 8),
+                                      spreadRadius: 2,
                                     ),
                                   ],
+                                  border: Border.all(color: AppColors.lightGold.withValues(alpha: 0.3), width: 1.5),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
-                                      width: 80,
-                                      height: 80,
+                                      width: 90,
+                                      height: 90,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         gradient: AppColors.goldGradient,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: AppColors.gold.withValues(alpha: 0.4),
+                                            blurRadius: 15,
+                                            offset: const Offset(0, 5),
+                                          ),
+                                        ],
                                       ),
                                       child: Center(
                                         child: Text(
                                           coin['country_flag'] ?? '🪙',
-                                          style: const TextStyle(fontSize: 40),
+                                          style: const TextStyle(fontSize: 48),
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 12),
+                                    const SizedBox(height: 16),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
                                       child: Text(
                                         coin['country'] ?? 'Unknown',
                                         textAlign: TextAlign.center,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
                                           color: AppColors.textDark,
+                                          letterSpacing: 0.3,
                                         ),
                                       ),
                                     ),
-                                    Text(
-                                      coin['country_flag'] ?? '',
-                                      style: const TextStyle(fontSize: 20),
+                                    const SizedBox(height: 8),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.gold.withValues(alpha: 0.15),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Text(
+                                        'Tap to explore',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 11,
+                                          color: AppColors.gold,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -212,48 +238,81 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                         ),
                       ),
                       child: Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.all(16),
+                        margin: const EdgeInsets.only(bottom: 16),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: AppColors.lightGold.withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Center(child: Text(widget.flag, style: const TextStyle(fontSize: 32))),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    coin['name'] ?? 'Unknown Coin',
-                                    style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark),
-                                  ),
-                                  if (coin['main_information']?['years'] != null)
-                                    Text(
-                                      'Years: ${coin['main_information']['years']}',
-                                      style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray),
-                                    ),
-                                  if (coin['price'] != null && coin['price'].toString().isNotEmpty)
-                                    Text(
-                                      'Price: ${coin['price']}',
-                                      style: GoogleFonts.poppins(fontSize: 13, color: AppColors.gold, fontWeight: FontWeight.w500),
-                                    ),
-                                ],
-                              ),
-                            ),
-                            Icon(Icons.arrow_forward_ios, color: AppColors.textGray, size: 16),
+                          gradient: LinearGradient(
+                            colors: [Colors.white, AppColors.lightGold.withValues(alpha: 0.08)],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(color: AppColors.gold.withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 6)),
                           ],
+                          border: Border.all(color: AppColors.lightGold.withValues(alpha: 0.3), width: 1),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 70,
+                                height: 70,
+                                decoration: BoxDecoration(
+                                  gradient: AppColors.goldGradient,
+                                  borderRadius: BorderRadius.circular(16),
+                                  boxShadow: [
+                                    BoxShadow(color: AppColors.gold.withValues(alpha: 0.3), blurRadius: 10, offset: const Offset(0, 4)),
+                                  ],
+                                ),
+                                child: Center(child: Text(widget.flag, style: const TextStyle(fontSize: 36))),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      coin['name'] ?? 'Unknown Coin',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textDark),
+                                    ),
+                                    const SizedBox(height: 6),
+                                    if (coin['main_information']?['years'] != null)
+                                      Row(
+                                        children: [
+                                          Icon(Icons.calendar_today, size: 14, color: AppColors.textGray),
+                                          const SizedBox(width: 4),
+                                          Text(
+                                            '${coin['main_information']['years']}',
+                                            style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray),
+                                          ),
+                                        ],
+                                      ),
+                                    if (coin['price'] != null && coin['price'].toString().isNotEmpty)
+                                      Row(
+                                        children: [
+                                          Icon(Icons.attach_money, size: 14, color: AppColors.gold),
+                                          Text(
+                                            '${coin['price']}',
+                                            style: GoogleFonts.poppins(fontSize: 13, color: AppColors.gold, fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: AppColors.gold.withValues(alpha: 0.1),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(Icons.arrow_forward_ios, color: AppColors.gold, size: 16),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -311,22 +370,42 @@ class SingleCoinDetailScreen extends StatelessWidget {
 
   Widget _buildDetailCard(String label, String value) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 14),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+        gradient: LinearGradient(
+          colors: [Colors.white, AppColors.lightGold.withValues(alpha: 0.05)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(color: AppColors.gold.withValues(alpha: 0.12), blurRadius: 12, offset: const Offset(0, 4)),
+        ],
+        border: Border.all(color: AppColors.lightGold.withValues(alpha: 0.25), width: 1),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.gold.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(Icons.info_outline, color: AppColors.gold, size: 18),
+              ),
+              const SizedBox(width: 12),
+              Text(label, style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+            ],
+          ),
           Flexible(
             child: Text(
               value,
               textAlign: TextAlign.right,
-              style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textGray),
+              style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textGray, fontWeight: FontWeight.w500),
             ),
           ),
         ],
