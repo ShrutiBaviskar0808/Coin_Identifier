@@ -850,39 +850,149 @@ class TerminologyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final terms = [
-      {'term': 'Numismatics', 'def': 'The study or collection of currency, including coins, tokens, and paper money'},
-      {'term': 'Obverse', 'def': 'The front or "heads" side of a coin'},
-      {'term': 'Reverse', 'def': 'The back or "tails" side of a coin'},
-      {'term': 'Mint Mark', 'def': 'A small letter or symbol indicating where a coin was produced'},
-      {'term': 'Patina', 'def': 'The natural toning or discoloration that develops on a coin over time'},
-      {'term': 'Proof', 'def': 'A specially made coin with mirror-like surfaces and frosted designs'},
-      {'term': 'Bullion', 'def': 'Coins valued primarily for their precious metal content'},
-      {'term': 'Grade', 'def': 'The condition rating of a coin, typically on a scale from 1 to 70'},
+      {'term': 'Numismatics', 'def': 'The study or collection of currency, including coins, tokens, and paper money', 'icon': Icons.school, 'color': Colors.blue},
+      {'term': 'Obverse', 'def': 'The front or "heads" side of a coin', 'icon': Icons.flip_to_front, 'color': Colors.green},
+      {'term': 'Reverse', 'def': 'The back or "tails" side of a coin', 'icon': Icons.flip_to_back, 'color': Colors.orange},
+      {'term': 'Mint Mark', 'def': 'A small letter or symbol indicating where a coin was produced', 'icon': Icons.location_on, 'color': Colors.red},
+      {'term': 'Patina', 'def': 'The natural toning or discoloration that develops on a coin over time', 'icon': Icons.palette, 'color': Colors.purple},
+      {'term': 'Proof', 'def': 'A specially made coin with mirror-like surfaces and frosted designs', 'icon': Icons.auto_awesome, 'color': Colors.amber},
+      {'term': 'Bullion', 'def': 'Coins valued primarily for their precious metal content', 'icon': Icons.diamond, 'color': Colors.teal},
+      {'term': 'Grade', 'def': 'The condition rating of a coin, typically on a scale from 1 to 70', 'icon': Icons.grade, 'color': Colors.indigo},
     ];
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(title: Text('Coin Terminology', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)), backgroundColor: Colors.white, elevation: 0),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: terms.length,
-        itemBuilder: (context, index) => Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 200,
+            pinned: true,
+            backgroundColor: Colors.indigo,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text('Coin Terminology', style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 18)),
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.indigo, Colors.indigo.shade700],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                  ),
+                  Positioned(right: -30, top: 30, child: Icon(Icons.book, size: 150, color: Colors.white.withValues(alpha: 0.1))),
+                  Positioned(left: -20, bottom: 20, child: Icon(Icons.menu_book, size: 100, color: Colors.white.withValues(alpha: 0.1))),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 40),
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.2),
+                                blurRadius: 15,
+                                offset: const Offset(0, 8),
+                              ),
+                            ],
+                          ),
+                          child: Icon(Icons.book, size: 50, color: Colors.white),
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text('${terms.length} Terms', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(terms[index]['term']!, style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.gold)),
-              const SizedBox(height: 8),
-              Text(terms[index]['def']!, style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textGray, height: 1.5)),
-            ],
+          SliverPadding(
+            padding: const EdgeInsets.all(16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => _buildTermCard(terms[index]),
+                childCount: terms.length,
+              ),
+            ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTermCard(Map<String, dynamic> term) {
+    final color = term['color'] as Color;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.white, color.withValues(alpha: 0.05)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.2), width: 1.5),
+        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(18),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.withValues(alpha: 0.4),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Icon(term['icon'] as IconData, color: Colors.white, size: 28),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(term['term']!, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [color.withValues(alpha: 0.08), color.withValues(alpha: 0.03)],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            child: Text(term['def']!, style: GoogleFonts.poppins(fontSize: 15, color: AppColors.textGray, height: 1.6)),
+          ),
+        ],
       ),
     );
   }
