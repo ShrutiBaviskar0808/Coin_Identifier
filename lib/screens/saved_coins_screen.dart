@@ -37,18 +37,19 @@ class SavedCoinsScreen extends StatelessWidget {
               itemCount: savedCoins.length,
               itemBuilder: (context, index) {
                 final coin = savedCoins[index];
+                final rarityColor = _getRarityColor(coin['rarity']!);
                 return Container(
                   margin: const EdgeInsets.only(bottom: 16),
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Colors.white, AppColors.lightGold.withValues(alpha: 0.08)],
+                      colors: [Colors.white, rarityColor.withValues(alpha: 0.05)],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [BoxShadow(color: AppColors.gold.withValues(alpha: 0.15), blurRadius: 10, offset: const Offset(0, 3))],
-                    border: Border.all(color: AppColors.lightGold.withValues(alpha: 0.3), width: 1),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [BoxShadow(color: rarityColor.withValues(alpha: 0.2), blurRadius: 15, offset: const Offset(0, 5))],
+                    border: Border.all(color: rarityColor.withValues(alpha: 0.3), width: 1.5),
                   ),
                   child: Column(
                     children: [

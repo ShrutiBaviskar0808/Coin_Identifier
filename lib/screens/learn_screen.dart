@@ -105,22 +105,38 @@ class LearnScreen extends StatelessWidget {
   }
 
   Widget _buildCategoryCard(BuildContext context, String title, String description, IconData icon, String category) {
+    final colors = _getCategoryColors(category);
     return InkWell(
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => CategoryDetailScreen(category: category, title: title))),
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+          gradient: LinearGradient(
+            colors: [Colors.white, colors[0].withValues(alpha: 0.05)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: colors[0].withValues(alpha: 0.2), width: 1.5),
+          boxShadow: [BoxShadow(color: colors[0].withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
         ),
         child: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(color: AppColors.lightGold.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
-              child: Icon(icon, color: AppColors.gold, size: 28),
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: colors),
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: [
+                  BoxShadow(
+                    color: colors[0].withValues(alpha: 0.4),
+                    blurRadius: 10,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Icon(icon, color: Colors.white, size: 30),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -137,6 +153,23 @@ class LearnScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List<Color> _getCategoryColors(String category) {
+    switch (category) {
+      case 'ancient':
+        return [Color(0xFF8B4513), Color(0xFFA0522D)];
+      case 'gold':
+        return [Color(0xFFFFD700), Color(0xFFFFA500)];
+      case 'rare':
+        return [Color(0xFF9C27B0), Color(0xFFE91E63)];
+      case 'error':
+        return [Color(0xFFFF5722), Color(0xFFFF9800)];
+      case 'expensive':
+        return [Color(0xFF4CAF50), Color(0xFF8BC34A)];
+      default:
+        return [AppColors.gold, AppColors.lightGold];
+    }
   }
 }
 

@@ -58,16 +58,22 @@ class MarketScreen extends StatelessWidget {
   }
 
   Widget _buildMarketCard(String metal, String change, String price, bool isUp, String open, String high, String range) {
+    final cardColor = isUp ? Colors.green : Colors.red;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(
+          colors: [Colors.white, cardColor.withValues(alpha: 0.03)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: cardColor.withValues(alpha: 0.2), width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
+            color: cardColor.withValues(alpha: 0.15),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -76,13 +82,20 @@ class MarketScreen extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 60,
-                height: 60,
+                width: 64,
+                height: 64,
                 decoration: BoxDecoration(
-                  gradient: AppColors.goldGradient,
-                  borderRadius: BorderRadius.circular(16),
+                  gradient: LinearGradient(colors: [cardColor, cardColor.withValues(alpha: 0.7)]),
+                  borderRadius: BorderRadius.circular(18),
+                  boxShadow: [
+                    BoxShadow(
+                      color: cardColor.withValues(alpha: 0.4),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
                 ),
-                child: Icon(isUp ? Icons.trending_up : Icons.trending_down, size: 30, color: Colors.white),
+                child: Icon(isUp ? Icons.trending_up : Icons.trending_down, size: 32, color: Colors.white),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -132,9 +145,14 @@ class MarketScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+        gradient: LinearGradient(
+          colors: [Colors.white, AppColors.lightGold.withValues(alpha: 0.05)],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: AppColors.gold.withValues(alpha: 0.15)),
+        boxShadow: [BoxShadow(color: AppColors.gold.withValues(alpha: 0.1), blurRadius: 15, offset: const Offset(0, 5))],
       ),
       child: Row(
         children: [

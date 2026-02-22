@@ -341,16 +341,16 @@ class _HomeContent extends StatelessWidget {
 
   Widget _buildQuickActions(BuildContext context) {
     final actions = [
-      {'icon': Icons.trending_up, 'title': 'Market\nValue', 'screen': const MarketScreen()},
-      {'icon': Icons.school_outlined, 'title': 'Learn\nCoins', 'screen': const LearnScreen()},
-      {'icon': Icons.history, 'title': 'Scan\nHistory', 'screen': const ScanHistoryScreen()},
-      {'icon': Icons.bookmark, 'title': 'Saved\nCoins', 'screen': const SavedCoinsScreen()},
-      {'icon': Icons.grade, 'title': 'Grading\nGuide', 'screen': const GradingGuideScreen()},
-      {'icon': Icons.calculate, 'title': 'Calculator', 'screen': const CalculatorScreen()},
-      {'icon': Icons.article, 'title': 'Coin\nNews', 'screen': const NewsScreen()},
-      {'icon': Icons.event, 'title': 'Events', 'screen': const EventsScreen()},
-      {'icon': Icons.compare_arrows, 'title': 'Compare', 'screen': const CompareScreen()},
-      {'icon': Icons.bar_chart, 'title': 'Statistics', 'screen': const StatisticsScreen()},
+      {'icon': Icons.trending_up, 'title': 'Market\nValue', 'screen': const MarketScreen(), 'colors': [Color(0xFF667eea), Color(0xFF764ba2)]},
+      {'icon': Icons.school_outlined, 'title': 'Learn\nCoins', 'screen': const LearnScreen(), 'colors': [Color(0xFFf093fb), Color(0xFFf5576c)]},
+      {'icon': Icons.history, 'title': 'Scan\nHistory', 'screen': const ScanHistoryScreen(), 'colors': [Color(0xFF4facfe), Color(0xFF00f2fe)]},
+      {'icon': Icons.bookmark, 'title': 'Saved\nCoins', 'screen': const SavedCoinsScreen(), 'colors': [Color(0xFF43e97b), Color(0xFF38f9d7)]},
+      {'icon': Icons.grade, 'title': 'Grading\nGuide', 'screen': const GradingGuideScreen(), 'colors': [Color(0xFFfa709a), Color(0xFFfee140)]},
+      {'icon': Icons.calculate, 'title': 'Calculator', 'screen': const CalculatorScreen(), 'colors': [Color(0xFF30cfd0), Color(0xFF330867)]},
+      {'icon': Icons.article, 'title': 'Coin\nNews', 'screen': const NewsScreen(), 'colors': [Color(0xFFa8edea), Color(0xFFfed6e3)]},
+      {'icon': Icons.event, 'title': 'Events', 'screen': const EventsScreen(), 'colors': [Color(0xFFff9a56), Color(0xFFff6a88)]},
+      {'icon': Icons.compare_arrows, 'title': 'Compare', 'screen': const CompareScreen(), 'colors': [Color(0xFF8EC5FC), Color(0xFFE0C3FC)]},
+      {'icon': Icons.bar_chart, 'title': 'Statistics', 'screen': const StatisticsScreen(), 'colors': [Color(0xFFfbc2eb), Color(0xFFa6c1ee)]},
     ];
 
     return GridView.builder(
@@ -365,40 +365,69 @@ class _HomeContent extends StatelessWidget {
       itemCount: actions.length,
       itemBuilder: (context, index) {
         final action = actions[index];
+        final colors = action['colors'] as List<Color>;
         return GestureDetector(
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => action['screen'] as Widget)),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              gradient: LinearGradient(
+                colors: [Colors.white, colors[0].withValues(alpha: 0.05)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: colors[0].withValues(alpha: 0.2), width: 1.5),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
+                  color: colors[0].withValues(alpha: 0.2),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
                 ),
               ],
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Stack(
               children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    gradient: AppColors.goldGradient,
-                    borderRadius: BorderRadius.circular(16),
+                Positioned(
+                  right: -20,
+                  bottom: -20,
+                  child: Icon(
+                    action['icon'] as IconData,
+                    size: 80,
+                    color: colors[1].withValues(alpha: 0.08),
                   ),
-                  child: Icon(action['icon'] as IconData, size: 30, color: Colors.white),
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  action['title'] as String,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textDark,
+                Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: colors),
+                          borderRadius: BorderRadius.circular(18),
+                          boxShadow: [
+                            BoxShadow(
+                              color: colors[0].withValues(alpha: 0.4),
+                              blurRadius: 12,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Icon(action['icon'] as IconData, size: 32, color: Colors.white),
+                      ),
+                      const SizedBox(height: 14),
+                      Text(
+                        action['title'] as String,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textDark,
+                          height: 1.2,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

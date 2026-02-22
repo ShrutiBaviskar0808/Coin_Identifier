@@ -38,13 +38,20 @@ class ScanHistoryScreen extends StatelessWidget {
               itemCount: history.length,
               itemBuilder: (context, index) {
                 final item = history[index];
+                final confidenceValue = int.parse(item['confidence']!.replaceAll('%', ''));
+                final cardColor = confidenceValue >= 95 ? Colors.green : confidenceValue >= 90 ? Colors.blue : Colors.orange;
                 return Container(
                   margin: const EdgeInsets.only(bottom: 12),
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+                    gradient: LinearGradient(
+                      colors: [Colors.white, cardColor.withValues(alpha: 0.03)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: cardColor.withValues(alpha: 0.2), width: 1.5),
+                    boxShadow: [BoxShadow(color: cardColor.withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
                   ),
                   child: Column(
                     children: [
