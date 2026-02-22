@@ -179,16 +179,116 @@ class CategoryDetailScreen extends StatelessWidget {
 
   const CategoryDetailScreen({super.key, required this.category, required this.title});
 
+  List<Color> _getCategoryColors() {
+    switch (category) {
+      case 'ancient':
+        return [Color(0xFF8B4513), Color(0xFFA0522D)];
+      case 'gold':
+        return [Color(0xFFFFD700), Color(0xFFFFA500)];
+      case 'rare':
+        return [Color(0xFF9C27B0), Color(0xFFE91E63)];
+      case 'error':
+        return [Color(0xFFFF5722), Color(0xFFFF9800)];
+      case 'expensive':
+        return [Color(0xFF4CAF50), Color(0xFF8BC34A)];
+      default:
+        return [AppColors.gold, AppColors.lightGold];
+    }
+  }
+
+  IconData _getCategoryIcon() {
+    switch (category) {
+      case 'ancient':
+        return Icons.history_edu;
+      case 'gold':
+        return Icons.monetization_on;
+      case 'rare':
+        return Icons.diamond;
+      case 'error':
+        return Icons.error_outline;
+      case 'expensive':
+        return Icons.attach_money;
+      default:
+        return Icons.monetization_on;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final items = _getCategoryItems();
+    final colors = _getCategoryColors();
+    final icon = _getCategoryIcon();
+    
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(title: Text(title, style: GoogleFonts.poppins(fontWeight: FontWeight.w600)), backgroundColor: Colors.white, elevation: 0),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: items.length,
-        itemBuilder: (context, index) => _buildCoinItem(context, items[index]),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 200,
+            pinned: true,
+            backgroundColor: colors[0],
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(title, style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 18)),
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: colors,
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                  ),
+                  Positioned(right: -30, top: 30, child: Icon(icon, size: 150, color: Colors.white.withValues(alpha: 0.1))),
+                  Positioned(left: -20, bottom: 20, child: Icon(Icons.stars, size: 100, color: Colors.white.withValues(alpha: 0.1))),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 40),
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.2),
+                                blurRadius: 15,
+                                offset: const Offset(0, 8),
+                              ),
+                            ],
+                          ),
+                          child: Icon(icon, size: 50, color: Colors.white),
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text('${items.length} Coins', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.all(16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => _buildCoinItem(context, items[index], colors),
+                childCount: items.length,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -240,54 +340,79 @@ class CategoryDetailScreen extends StatelessWidget {
     return data[category] ?? [];
   }
 
-  Widget _buildCoinItem(BuildContext context, Map<String, String> item) {
+  Widget _buildCoinItem(BuildContext context, Map<String, String> item, List<Color> colors) {
     return InkWell(
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleScreen(title: item['title']!, description: item['desc']!, year: item['year']!, value: item['value']!, metal: item['metal']!))),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+          gradient: LinearGradient(
+            colors: [Colors.white, colors[0].withValues(alpha: 0.05)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: colors[0].withValues(alpha: 0.2), width: 1.5),
+          boxShadow: [BoxShadow(color: colors[0].withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
         ),
         child: Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(color: AppColors.lightGold.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
-                  child: Center(child: Text(item['image']!, style: const TextStyle(fontSize: 32))),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(item['title']!, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark)),
-                      const SizedBox(height: 4),
-                      Text(item['desc']!, style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray)),
-                    ],
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Container(
+                    width: 70,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: colors),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: colors[0].withValues(alpha: 0.4),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: Center(child: Text(item['image']!, style: const TextStyle(fontSize: 36))),
                   ),
-                ),
-                Icon(Icons.arrow_forward_ios, color: AppColors.textGray, size: 16),
-              ],
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(item['title']!, style: GoogleFonts.poppins(fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                        const SizedBox(height: 6),
+                        Text(item['desc']!, style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray, height: 1.4), maxLines: 2, overflow: TextOverflow.ellipsis),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.arrow_forward_ios, color: colors[0], size: 18),
+                ],
+              ),
             ),
-            const SizedBox(height: 12),
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.background,
-                borderRadius: BorderRadius.circular(12),
+                gradient: LinearGradient(
+                  colors: [colors[0].withValues(alpha: 0.08), colors[1].withValues(alpha: 0.05)],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildInfoItem(Icons.calendar_today, 'Year', item['year']!),
-                  _buildInfoItem(Icons.attach_money, 'Value', item['value']!),
-                  _buildInfoItem(Icons.diamond, 'Metal', item['metal']!),
+                  _buildInfoItem(Icons.calendar_today, 'Year', item['year']!, colors[0]),
+                  Container(width: 1, height: 30, color: colors[0].withValues(alpha: 0.2)),
+                  _buildInfoItem(Icons.attach_money, 'Value', item['value']!, colors[0]),
+                  Container(width: 1, height: 30, color: colors[0].withValues(alpha: 0.2)),
+                  _buildInfoItem(Icons.diamond, 'Metal', item['metal']!, colors[0]),
                 ],
               ),
             ),
@@ -297,13 +422,14 @@ class CategoryDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoItem(IconData icon, String label, String value) {
+  Widget _buildInfoItem(IconData icon, String label, String value, Color color) {
     return Column(
       children: [
-        Icon(icon, size: 16, color: AppColors.gold),
+        Icon(icon, size: 18, color: color),
         const SizedBox(height: 4),
         Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppColors.textGray)),
-        Text(value, style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+        const SizedBox(height: 2),
+        Text(value, style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textDark), textAlign: TextAlign.center, maxLines: 1, overflow: TextOverflow.ellipsis),
       ],
     );
   }
