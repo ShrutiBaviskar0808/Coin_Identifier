@@ -22,7 +22,7 @@ class CollectionScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     'My Collection',
-                    style: GoogleFonts.playfairDisplay(
+                    style: GoogleFonts.poppins(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textDark,

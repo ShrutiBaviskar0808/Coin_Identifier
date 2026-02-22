@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
             children: [
               Text(
                 'Profile',
-                style: GoogleFonts.playfairDisplay(
+                style: GoogleFonts.poppins(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: AppColors.textDark,

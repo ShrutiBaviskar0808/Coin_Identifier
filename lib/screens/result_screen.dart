@@ -83,7 +83,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
                 const SizedBox(height: 30),
                 Text(
                   'American Gold Eagle',
-                  style: GoogleFonts.playfairDisplay(
+                  style: GoogleFonts.poppins(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textDark,

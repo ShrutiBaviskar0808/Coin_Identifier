@@ -22,7 +22,7 @@ class LearnScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     'Learn',
-                    style: GoogleFonts.playfairDisplay(
+                    style: GoogleFonts.poppins(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textDark,

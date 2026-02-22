@@ -76,7 +76,7 @@ class _HomeContent extends StatelessWidget {
                 children: [
                   Text(
                     'Coin Identifier',
-                    style: GoogleFonts.playfairDisplay(
+                    style: GoogleFonts.poppins(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: AppColors.textDark,
@@ -119,7 +119,7 @@ class _HomeContent extends StatelessWidget {
                             const SizedBox(height: 16),
                             Text(
                               'Scan Coin',
-                              style: GoogleFonts.playfairDisplay(
+                              style: GoogleFonts.poppins(
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
