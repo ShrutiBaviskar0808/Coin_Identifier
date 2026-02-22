@@ -204,52 +204,133 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                   itemCount: _coinDetails.length,
                   itemBuilder: (context, index) {
                     final coin = _coinDetails[index];
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+                    return InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => SingleCoinDetailScreen(coin: coin, flag: widget.flag),
+                        ),
                       ),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: AppColors.lightGold.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: AppColors.lightGold.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Center(child: Text(widget.flag, style: const TextStyle(fontSize: 32))),
                             ),
-                            child: Center(child: Text(widget.flag, style: const TextStyle(fontSize: 32))),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  coin['title'] ?? 'Unknown Coin',
-                                  style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark),
-                                ),
-                                if (coin['year'] != null)
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
                                   Text(
-                                    'Year: ${coin['year']}',
-                                    style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray),
+                                    coin['title'] ?? 'Unknown Coin',
+                                    style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark),
                                   ),
-                                if (coin['value'] != null)
-                                  Text(
-                                    'Value: ${coin['value']}',
-                                    style: GoogleFonts.poppins(fontSize: 13, color: AppColors.gold, fontWeight: FontWeight.w500),
-                                  ),
-                              ],
+                                  if (coin['year'] != null)
+                                    Text(
+                                      'Year: ${coin['year']}',
+                                      style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray),
+                                    ),
+                                  if (coin['value'] != null)
+                                    Text(
+                                      'Value: ${coin['value']}',
+                                      style: GoogleFonts.poppins(fontSize: 13, color: AppColors.gold, fontWeight: FontWeight.w500),
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                            Icon(Icons.arrow_forward_ios, color: AppColors.textGray, size: 16),
+                          ],
+                        ),
                       ),
                     );
                   },
                 ),
+    );
+  }
+}
+
+class SingleCoinDetailScreen extends StatelessWidget {
+  final Map<String, dynamic> coin;
+  final String flag;
+
+  const SingleCoinDetailScreen({super.key, required this.coin, required this.flag});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: Text(coin['title'] ?? 'Coin Details', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: AppColors.goldGradient,
+                ),
+                child: Center(child: Text(flag, style: const TextStyle(fontSize: 80))),
+              ),
+            ),
+            const SizedBox(height: 24),
+            _buildDetailCard('Title', coin['title'] ?? 'N/A'),
+            _buildDetailCard('Year', coin['year']?.toString() ?? 'N/A'),
+            _buildDetailCard('Value', coin['value']?.toString() ?? 'N/A'),
+            _buildDetailCard('Denomination', coin['denomination']?.toString() ?? 'N/A'),
+            _buildDetailCard('Metal', coin['metal']?.toString() ?? 'N/A'),
+            _buildDetailCard('Weight', coin['weight']?.toString() ?? 'N/A'),
+            _buildDetailCard('Diameter', coin['diameter']?.toString() ?? 'N/A'),
+            _buildDetailCard('Mintage', coin['mintage']?.toString() ?? 'N/A'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailCard(String label, String value) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+          Flexible(
+            child: Text(
+              value,
+              textAlign: TextAlign.right,
+              style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textGray),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
