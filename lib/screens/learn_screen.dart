@@ -163,29 +163,45 @@ class CategoryDetailScreen extends StatelessWidget {
   List<Map<String, String>> _getCategoryItems() {
     final data = {
       'ancient': [
-        {'title': 'Roman Denarius', 'desc': 'Silver coin of ancient Rome, used for over 400 years', 'image': '🏛️'},
-        {'title': 'Greek Drachma', 'desc': 'Ancient Greek currency dating back to 5th century BC', 'image': '🏺'},
-        {'title': 'Byzantine Solidus', 'desc': 'Gold coin of the Byzantine Empire', 'image': '👑'},
+        {'title': 'Roman Denarius', 'desc': 'Silver coin of ancient Rome, used for over 400 years', 'image': '🏛️', 'year': '211 BC - 244 AD', 'value': '\$50-\$5,000', 'metal': 'Silver'},
+        {'title': 'Greek Drachma', 'desc': 'Ancient Greek currency dating back to 5th century BC', 'image': '🏺', 'year': '5th Century BC', 'value': '\$100-\$10,000', 'metal': 'Silver'},
+        {'title': 'Byzantine Solidus', 'desc': 'Gold coin of the Byzantine Empire', 'image': '👑', 'year': '4th-15th Century', 'value': '\$500-\$15,000', 'metal': 'Gold'},
+        {'title': 'Athenian Tetradrachm', 'desc': 'Famous owl coin from ancient Athens', 'image': '🦉', 'year': '449-413 BC', 'value': '\$200-\$8,000', 'metal': 'Silver'},
+        {'title': 'Roman Aureus', 'desc': 'Gold coin of ancient Rome, highly valued', 'image': '🏺', 'year': '1st Century BC', 'value': '\$1,000-\$50,000', 'metal': 'Gold'},
+        {'title': 'Persian Daric', 'desc': 'Ancient Persian gold coin with archer design', 'image': '🏹', 'year': '5th Century BC', 'value': '\$800-\$12,000', 'metal': 'Gold'},
       ],
       'gold': [
-        {'title': 'American Gold Eagle', 'desc': 'Official gold bullion coin of the United States', 'image': '🦅'},
-        {'title': 'Canadian Gold Maple Leaf', 'desc': 'One of the purest gold coins in the world', 'image': '🍁'},
-        {'title': 'South African Krugerrand', 'desc': 'First modern gold bullion coin', 'image': '🌍'},
+        {'title': 'American Gold Eagle', 'desc': 'Official gold bullion coin of the United States', 'image': '🦅', 'year': '1986-Present', 'value': '\$2,000-\$2,200', 'metal': '22K Gold'},
+        {'title': 'Canadian Gold Maple Leaf', 'desc': 'One of the purest gold coins in the world', 'image': '🍁', 'year': '1979-Present', 'value': '\$2,100-\$2,300', 'metal': '24K Gold'},
+        {'title': 'South African Krugerrand', 'desc': 'First modern gold bullion coin', 'image': '🌍', 'year': '1967-Present', 'value': '\$1,900-\$2,100', 'metal': '22K Gold'},
+        {'title': 'Austrian Gold Philharmonic', 'desc': 'European gold bullion coin with orchestra theme', 'image': '🎵', 'year': '1989-Present', 'value': '\$2,000-\$2,200', 'metal': '24K Gold'},
+        {'title': 'Chinese Gold Panda', 'desc': 'Annual design changes featuring pandas', 'image': '🐼', 'year': '1982-Present', 'value': '\$2,100-\$2,500', 'metal': '24K Gold'},
+        {'title': 'British Gold Sovereign', 'desc': 'Historic British gold coin still minted today', 'image': '👑', 'year': '1817-Present', 'value': '\$500-\$600', 'metal': '22K Gold'},
+        {'title': 'Australian Gold Nugget', 'desc': 'Features kangaroo design, highly pure gold', 'image': '🦘', 'year': '1986-Present', 'value': '\$2,000-\$2,200', 'metal': '24K Gold'},
       ],
       'rare': [
-        {'title': '1933 Double Eagle', 'desc': 'One of the most valuable coins ever sold', 'image': '💎'},
-        {'title': '1794 Flowing Hair Dollar', 'desc': 'First dollar coin issued by US federal government', 'image': '💵'},
-        {'title': 'Edward III Florin', 'desc': 'Medieval English gold coin, only 3 known to exist', 'image': '👑'},
+        {'title': '1933 Double Eagle', 'desc': 'One of the most valuable coins ever sold', 'image': '💎', 'year': '1933', 'value': '\$18.9 Million', 'metal': 'Gold'},
+        {'title': '1794 Flowing Hair Dollar', 'desc': 'First dollar coin issued by US federal government', 'image': '💵', 'year': '1794', 'value': '\$10 Million', 'metal': 'Silver'},
+        {'title': 'Edward III Florin', 'desc': 'Medieval English gold coin, only 3 known to exist', 'image': '👑', 'year': '1343', 'value': 'Priceless', 'metal': 'Gold'},
+        {'title': '1913 Liberty Head Nickel', 'desc': 'Only 5 specimens known, unauthorized minting', 'image': '🔒', 'year': '1913', 'value': '\$4.5 Million', 'metal': 'Nickel'},
+        {'title': '1804 Silver Dollar', 'desc': 'King of American coins, only 15 known', 'image': '👑', 'year': '1804', 'value': '\$4 Million', 'metal': 'Silver'},
+        {'title': 'Brasher Doubloon', 'desc': 'First gold coin struck in New York', 'image': '⭐', 'year': '1787', 'value': '\$9.36 Million', 'metal': 'Gold'},
       ],
       'error': [
-        {'title': 'Double Strike Error', 'desc': 'Coin struck twice by the die, creating doubled image', 'image': '⚠️'},
-        {'title': 'Off-Center Strike', 'desc': 'Misaligned striking creates unique appearance', 'image': '🎯'},
-        {'title': 'Wrong Planchet Error', 'desc': 'Coin struck on wrong metal blank', 'image': '🔄'},
+        {'title': 'Double Strike Error', 'desc': 'Coin struck twice by the die, creating doubled image', 'image': '⚠️', 'year': 'Various', 'value': '\$50-\$5,000', 'metal': 'Various'},
+        {'title': 'Off-Center Strike', 'desc': 'Misaligned striking creates unique appearance', 'image': '🎯', 'year': 'Various', 'value': '\$25-\$2,000', 'metal': 'Various'},
+        {'title': 'Wrong Planchet Error', 'desc': 'Coin struck on wrong metal blank', 'image': '🔄', 'year': 'Various', 'value': '\$100-\$10,000', 'metal': 'Various'},
+        {'title': 'Clipped Planchet', 'desc': 'Missing portion due to improper blank cutting', 'image': '✂️', 'year': 'Various', 'value': '\$20-\$500', 'metal': 'Various'},
+        {'title': 'Die Crack Error', 'desc': 'Raised lines from cracked die', 'image': '⚡', 'year': 'Various', 'value': '\$10-\$1,000', 'metal': 'Various'},
+        {'title': 'Broadstrike Error', 'desc': 'Coin struck without collar, larger diameter', 'image': '⭕', 'year': 'Various', 'value': '\$30-\$800', 'metal': 'Various'},
       ],
       'expensive': [
-        {'title': '1794 Flowing Hair Dollar', 'desc': 'Sold for \$10 million in 2013', 'image': '💰'},
-        {'title': '1933 Double Eagle', 'desc': 'Sold for \$18.9 million in 2021', 'image': '🏆'},
-        {'title': 'Brasher Doubloon', 'desc': 'Sold for \$9.36 million in 2021', 'image': '⭐'},
+        {'title': '1794 Flowing Hair Dollar', 'desc': 'Sold for \$10 million in 2013', 'image': '💰', 'year': '1794', 'value': '\$10 Million', 'metal': 'Silver'},
+        {'title': '1933 Double Eagle', 'desc': 'Sold for \$18.9 million in 2021', 'image': '🏆', 'year': '1933', 'value': '\$18.9 Million', 'metal': 'Gold'},
+        {'title': 'Brasher Doubloon', 'desc': 'Sold for \$9.36 million in 2021', 'image': '⭐', 'year': '1787', 'value': '\$9.36 Million', 'metal': 'Gold'},
+        {'title': '1343 Edward III Florin', 'desc': 'Medieval masterpiece, only 3 exist', 'image': '👑', 'year': '1343', 'value': 'Priceless', 'metal': 'Gold'},
+        {'title': '1787 Fugio Cent', 'desc': 'First official US coin, extremely rare', 'image': '🇺🇸', 'year': '1787', 'value': '\$1.5 Million', 'metal': 'Copper'},
+        {'title': '1907 Saint-Gaudens', 'desc': 'Ultra high relief, most beautiful US coin', 'image': '✨', 'year': '1907', 'value': '\$3 Million', 'metal': 'Gold'},
       ],
     };
     return data[category] ?? [];
@@ -193,7 +209,7 @@ class CategoryDetailScreen extends StatelessWidget {
 
   Widget _buildCoinItem(BuildContext context, Map<String, String> item) {
     return InkWell(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleScreen(title: item['title']!, description: item['desc']!))),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleScreen(title: item['title']!, description: item['desc']!, year: item['year']!, value: item['value']!, metal: item['metal']!))),
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(16),
@@ -202,29 +218,60 @@ class CategoryDetailScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
         ),
-        child: Row(
+        child: Column(
           children: [
-            Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(color: AppColors.lightGold.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
-              child: Center(child: Text(item['image']!, style: const TextStyle(fontSize: 32))),
+            Row(
+              children: [
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(color: AppColors.lightGold.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
+                  child: Center(child: Text(item['image']!, style: const TextStyle(fontSize: 32))),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(item['title']!, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+                      const SizedBox(height: 4),
+                      Text(item['desc']!, style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray)),
+                    ],
+                  ),
+                ),
+                Icon(Icons.arrow_forward_ios, color: AppColors.textGray, size: 16),
+              ],
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.background,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(item['title']!, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark)),
-                  const SizedBox(height: 4),
-                  Text(item['desc']!, style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray)),
+                  _buildInfoItem(Icons.calendar_today, 'Year', item['year']!),
+                  _buildInfoItem(Icons.attach_money, 'Value', item['value']!),
+                  _buildInfoItem(Icons.diamond, 'Metal', item['metal']!),
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios, color: AppColors.textGray, size: 16),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildInfoItem(IconData icon, String label, String value) {
+    return Column(
+      children: [
+        Icon(icon, size: 16, color: AppColors.gold),
+        const SizedBox(height: 4),
+        Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppColors.textGray)),
+        Text(value, style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+      ],
     );
   }
 }
@@ -232,8 +279,11 @@ class CategoryDetailScreen extends StatelessWidget {
 class ArticleScreen extends StatelessWidget {
   final String title;
   final String description;
+  final String year;
+  final String value;
+  final String metal;
 
-  const ArticleScreen({super.key, required this.title, required this.description});
+  const ArticleScreen({super.key, required this.title, required this.description, required this.year, required this.value, required this.metal});
 
   @override
   Widget build(BuildContext context) {
@@ -247,17 +297,86 @@ class ArticleScreen extends StatelessWidget {
           children: [
             Container(
               height: 200,
-              decoration: BoxDecoration(color: AppColors.lightGold.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(20)),
-              child: const Center(child: Icon(Icons.image, size: 80, color: Colors.grey)),
+              decoration: BoxDecoration(
+                gradient: AppColors.goldGradient,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [BoxShadow(color: AppColors.gold.withValues(alpha: 0.3), blurRadius: 15, offset: const Offset(0, 5))],
+              ),
+              child: const Center(child: Icon(Icons.monetization_on, size: 80, color: Colors.white)),
             ),
             const SizedBox(height: 20),
             Text(title, style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildDetailColumn('Year', year, Icons.calendar_today, Colors.blue),
+                  _buildDetailColumn('Value', value, Icons.attach_money, Colors.green),
+                  _buildDetailColumn('Metal', metal, Icons.diamond, AppColors.gold),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text('Overview', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
             const SizedBox(height: 12),
             Text(description, style: GoogleFonts.poppins(fontSize: 16, color: AppColors.textGray, height: 1.6)),
             const SizedBox(height: 20),
-            Text('Full article content would be displayed here with detailed information, history, and interesting facts about $title.', style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textGray, height: 1.8)),
+            Text('Historical Significance', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+            const SizedBox(height: 12),
+            Text('This coin represents an important piece of numismatic history. $title has been studied by collectors and historians for its unique characteristics and historical context. The coin\'s design, minting process, and circulation tell a fascinating story about the era in which it was created.', style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textGray, height: 1.8)),
+            const SizedBox(height: 20),
+            Text('Collector Information', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+            const SizedBox(height: 12),
+            _buildInfoCard('Rarity', 'This coin is considered highly collectible due to its limited mintage and historical significance.'),
+            _buildInfoCard('Condition', 'Value varies significantly based on grade. Well-preserved specimens command premium prices.'),
+            _buildInfoCard('Authentication', 'Professional grading and authentication recommended for valuable specimens.'),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildDetailColumn(String label, String value, IconData icon, Color color) {
+    return Column(
+      children: [
+        Icon(icon, color: color, size: 28),
+        const SizedBox(height: 8),
+        Text(label, style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textGray)),
+        const SizedBox(height: 4),
+        Text(value, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textDark), textAlign: TextAlign.center),
+      ],
+    );
+  }
+
+  Widget _buildInfoCard(String title, String content) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8)],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.info_outline, color: AppColors.gold, size: 20),
+              const SizedBox(width: 8),
+              Text(title, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(content, style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray, height: 1.5)),
+        ],
       ),
     );
   }
