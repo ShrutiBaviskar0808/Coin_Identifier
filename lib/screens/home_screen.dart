@@ -124,9 +124,9 @@ class _HomeContent extends StatelessWidget {
               const SizedBox(height: 30),
               _buildHeroSection(context),
               const SizedBox(height: 24),
-              _buildStatsRow(),
+              _buildTrendingSection(context),
               const SizedBox(height: 24),
-              _buildFeaturedCoin(context),
+              _buildLiveMarketTicker(),
               const SizedBox(height: 30),
               Text(
                 'Quick Actions',
@@ -147,83 +147,64 @@ class _HomeContent extends StatelessWidget {
 
   Widget _buildHeroSection(BuildContext context) {
     return Container(
-      height: 220,
+      height: 240,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.gold, Color(0xFFD4AF37), Color(0xFFF4C430)],
+          colors: [Color(0xFF1A237E), Color(0xFF283593), Color(0xFF3949AB)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(28),
         boxShadow: [
-          BoxShadow(color: AppColors.gold.withValues(alpha: 0.4), blurRadius: 25, offset: const Offset(0, 12)),
+          BoxShadow(color: Color(0xFF1A237E).withValues(alpha: 0.4), blurRadius: 30, offset: const Offset(0, 15)),
         ],
       ),
       child: Stack(
         children: [
-          Positioned(right: -30, top: -30, child: Icon(Icons.monetization_on, size: 180, color: Colors.white.withValues(alpha: 0.15))),
-          Positioned(left: -20, bottom: -20, child: Icon(Icons.diamond, size: 120, color: Colors.white.withValues(alpha: 0.1))),
+          Positioned(right: -40, top: -40, child: Icon(Icons.auto_awesome, size: 200, color: Colors.white.withValues(alpha: 0.08))),
+          Positioned(left: -30, bottom: -30, child: Icon(Icons.stars, size: 150, color: Colors.white.withValues(alpha: 0.08))),
+          Positioned(right: 20, bottom: 20, child: Icon(Icons.monetization_on, size: 100, color: Colors.amber.withValues(alpha: 0.15))),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.25), borderRadius: BorderRadius.circular(20)),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [Colors.amber, Colors.orange]),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       child: Row(
                         children: [
-                          Icon(Icons.auto_awesome, size: 14, color: Colors.white),
+                          Icon(Icons.whatshot, size: 12, color: Colors.white),
                           const SizedBox(width: 4),
-                          Text('AI Powered', style: GoogleFonts.poppins(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w600)),
+                          Text('TRENDING', style: GoogleFonts.poppins(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
                     const Spacer(),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.25), borderRadius: BorderRadius.circular(20)),
-                      child: Row(
-                        children: [
-                          Icon(Icons.verified, size: 14, color: Colors.white),
-                          const SizedBox(width: 4),
-                          Text('98% Accurate', style: GoogleFonts.poppins(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w600)),
-                        ],
-                      ),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), shape: BoxShape.circle),
+                      child: Icon(Icons.notifications_active, size: 18, color: Colors.amber),
                     ),
                   ],
                 ),
                 const Spacer(),
-                Text('Discover Your Coins', style: GoogleFonts.poppins(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
-                const SizedBox(height: 8),
-                Text('Explore collection, market trends & history', style: GoogleFonts.poppins(fontSize: 13, color: Colors.white.withValues(alpha: 0.95))),
-                const SizedBox(height: 16),
+                Text('Coin Universe', style: GoogleFonts.poppins(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: -0.5)),
+                const SizedBox(height: 6),
+                Text('Your Gateway to Numismatic Excellence', style: GoogleFonts.poppins(fontSize: 13, color: Colors.white.withValues(alpha: 0.9), letterSpacing: 0.3)),
+                const SizedBox(height: 20),
                 Row(
                   children: [
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MarketScreen())),
-                        icon: const Icon(Icons.trending_up, size: 20),
-                        label: Text('Market Trends', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600)),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: AppColors.gold,
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          elevation: 0,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Container(
-                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.25), borderRadius: BorderRadius.circular(12)),
-                      child: IconButton(
-                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LearnScreen())),
-                        icon: const Icon(Icons.school, color: Colors.white, size: 24),
-                      ),
-                    ),
+                    _buildMiniStat('2.5K+', 'Scans', Icons.qr_code_scanner),
+                    const SizedBox(width: 16),
+                    _buildMiniStat('150+', 'Countries', Icons.public),
+                    const SizedBox(width: 16),
+                    _buildMiniStat('98%', 'Accuracy', Icons.verified),
                   ],
                 ),
               ],
@@ -234,74 +215,124 @@ class _HomeContent extends StatelessWidget {
     );
   }
 
-  Widget _buildStatsRow() {
-    return Row(
+  Widget _buildMiniStat(String value, String label, IconData icon) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.15),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+        ),
+        child: Column(
+          children: [
+            Icon(icon, color: Colors.amber, size: 20),
+            const SizedBox(height: 4),
+            Text(value, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text(label, style: GoogleFonts.poppins(fontSize: 9, color: Colors.white.withValues(alpha: 0.8))),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTrendingSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: _buildStatCard('2.5K+', 'Coins Scanned', Icons.qr_code_scanner, Colors.blue)),
-        const SizedBox(width: 12),
-        Expanded(child: _buildStatCard('98%', 'Accuracy', Icons.verified, Colors.green)),
-        const SizedBox(width: 12),
-        Expanded(child: _buildStatCard('150+', 'Countries', Icons.public, Colors.orange)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Hot Picks Today', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+            TextButton(
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MarketScreen())),
+              child: Text('View All', style: GoogleFonts.poppins(fontSize: 13, color: AppColors.gold, fontWeight: FontWeight.w600)),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              _buildTrendingCard('American Eagle', '\$2,150', '+3.2%', '🦅', Colors.blue, true),
+              _buildTrendingCard('Gold Krugerrand', '\$1,850', '+2.1%', '🌍', Colors.orange, true),
+              _buildTrendingCard('Silver Maple', '\$28', '-0.5%', '🍁', Colors.red, false),
+            ],
+          ),
+        ),
       ],
     );
   }
 
-  Widget _buildStatCard(String value, String label, IconData icon, Color color) {
+  Widget _buildTrendingCard(String name, String price, String change, String emoji, Color color, bool isUp) {
     return Container(
+      width: 160,
+      margin: const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+        gradient: LinearGradient(
+          colors: [Colors.white, color.withValues(alpha: 0.05)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
+        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.1), blurRadius: 15, offset: const Offset(0, 5))],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color, size: 28),
-          const SizedBox(height: 8),
-          Text(value, style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark)),
-          Text(label, style: GoogleFonts.poppins(fontSize: 10, color: AppColors.textGray), textAlign: TextAlign.center),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(emoji, style: const TextStyle(fontSize: 32)),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: (isUp ? Colors.green : Colors.red).withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(change, style: GoogleFonts.poppins(fontSize: 11, fontWeight: FontWeight.bold, color: isUp ? Colors.green : Colors.red)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(name, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+          const SizedBox(height: 4),
+          Text(price, style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: color)),
         ],
       ),
     );
   }
 
-  Widget _buildFeaturedCoin(BuildContext context) {
+  Widget _buildLiveMarketTicker() {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.deepPurple.shade700, Colors.deepPurple.shade900],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        gradient: LinearGradient(colors: [Colors.teal.shade700, Colors.teal.shade900]),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.deepPurple.withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 10))],
+        boxShadow: [BoxShadow(color: Colors.teal.withValues(alpha: 0.3), blurRadius: 15, offset: const Offset(0, 8))],
       ),
       child: Row(
         children: [
           Container(
-            width: 70,
-            height: 70,
-            decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: const Center(child: Text('💎', style: TextStyle(fontSize: 40))),
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
+            child: Icon(Icons.show_chart, color: Colors.white, size: 24),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Coin of the Day', style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withValues(alpha: 0.8))),
+                Text('Live Market Update', style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withValues(alpha: 0.9))),
                 const SizedBox(height: 4),
-                Text('1933 Double Eagle', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-                const SizedBox(height: 4),
-                Text('Worth \$18.9 Million', style: GoogleFonts.poppins(fontSize: 13, color: Colors.amber.shade200, fontWeight: FontWeight.w600)),
+                Text('Gold: \$2,100 • Silver: \$25 • Platinum: \$1,050', style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.white)),
               ],
             ),
           ),
-          Icon(Icons.arrow_forward_ios, color: Colors.white, size: 20),
+          Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
         ],
       ),
     );
