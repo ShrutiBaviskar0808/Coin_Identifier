@@ -147,7 +147,7 @@ class _HomeContent extends StatelessWidget {
 
   Widget _buildHeroSection(BuildContext context) {
     return Container(
-      height: 240,
+      height: 220,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Color(0xFF1A237E), Color(0xFF283593), Color(0xFF3949AB)],
@@ -165,7 +165,7 @@ class _HomeContent extends StatelessWidget {
           Positioned(left: -30, bottom: -30, child: Icon(Icons.stars, size: 150, color: Colors.white.withValues(alpha: 0.08))),
           Positioned(right: 20, bottom: 20, child: Icon(Icons.monetization_on, size: 100, color: Colors.amber.withValues(alpha: 0.15))),
           Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -194,16 +194,16 @@ class _HomeContent extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                Text('Coin Universe', style: GoogleFonts.poppins(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: -0.5)),
-                const SizedBox(height: 6),
-                Text('Your Gateway to Numismatic Excellence', style: GoogleFonts.poppins(fontSize: 13, color: Colors.white.withValues(alpha: 0.9), letterSpacing: 0.3)),
-                const SizedBox(height: 20),
+                Text('Coin Universe', style: GoogleFonts.poppins(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: -0.5)),
+                const SizedBox(height: 4),
+                Text('Your Gateway to Numismatic Excellence', style: GoogleFonts.poppins(fontSize: 12, color: Colors.white.withValues(alpha: 0.9), letterSpacing: 0.3)),
+                const SizedBox(height: 16),
                 Row(
                   children: [
                     _buildMiniStat('2.5K+', 'Scans', Icons.qr_code_scanner),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 12),
                     _buildMiniStat('150+', 'Countries', Icons.public),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 12),
                     _buildMiniStat('98%', 'Accuracy', Icons.verified),
                   ],
                 ),
@@ -218,18 +218,19 @@ class _HomeContent extends StatelessWidget {
   Widget _buildMiniStat(String value, String label, IconData icon) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: Colors.amber, size: 20),
-            const SizedBox(height: 4),
-            Text(value, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
-            Text(label, style: GoogleFonts.poppins(fontSize: 9, color: Colors.white.withValues(alpha: 0.8))),
+            Icon(icon, color: Colors.amber, size: 18),
+            const SizedBox(height: 2),
+            Text(value, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)),
+            Text(label, style: GoogleFonts.poppins(fontSize: 8, color: Colors.white.withValues(alpha: 0.8))),
           ],
         ),
       ),
