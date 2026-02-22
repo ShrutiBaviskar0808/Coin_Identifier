@@ -99,15 +99,18 @@ class _CollectionScreenState extends State<CollectionScreen> {
                                       shape: BoxShape.circle,
                                       gradient: AppColors.goldGradient,
                                     ),
-                                    child: coin['image'] != null
-                                        ? ClipOval(child: Image.network(coin['image'], fit: BoxFit.cover, errorBuilder: (_, __, ___) => const Icon(Icons.monetization_on, size: 40, color: Colors.white)))
-                                        : const Icon(Icons.monetization_on, size: 40, color: Colors.white),
+                                    child: Center(
+                                      child: Text(
+                                        coin['country_flag'] ?? '🪙',
+                                        style: const TextStyle(fontSize: 40),
+                                      ),
+                                    ),
                                   ),
                                   const SizedBox(height: 12),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8),
                                     child: Text(
-                                      coin['name'] ?? 'Unknown',
+                                      coin['country'] ?? 'Unknown',
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
@@ -119,11 +122,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
                                     ),
                                   ),
                                   Text(
-                                    coin['code'] ?? '',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      color: AppColors.textGray,
-                                    ),
+                                    coin['country_flag'] ?? '',
+                                    style: const TextStyle(fontSize: 20),
                                   ),
                                 ],
                               ),
