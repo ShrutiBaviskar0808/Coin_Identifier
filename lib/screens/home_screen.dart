@@ -10,11 +10,12 @@ import 'learn_screen.dart';
 import 'scan_history_screen.dart';
 import 'saved_coins_screen.dart';
 import 'grading_guide_screen.dart';
-import 'authentication_screen.dart';
 import 'calculator_screen.dart';
 import 'news_screen.dart';
 import 'events_screen.dart';
-import 'community_screen.dart';
+import 'compare_screen.dart';
+import 'statistics_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -189,11 +190,11 @@ class _HomeContent extends StatelessWidget {
       {'icon': Icons.history, 'title': 'Scan\nHistory', 'screen': const ScanHistoryScreen()},
       {'icon': Icons.bookmark, 'title': 'Saved\nCoins', 'screen': const SavedCoinsScreen()},
       {'icon': Icons.grade, 'title': 'Grading\nGuide', 'screen': const GradingGuideScreen()},
-      {'icon': Icons.verified_user, 'title': 'Authentication', 'screen': const AuthenticationScreen()},
       {'icon': Icons.calculate, 'title': 'Calculator', 'screen': const CalculatorScreen()},
       {'icon': Icons.article, 'title': 'Coin\nNews', 'screen': const NewsScreen()},
       {'icon': Icons.event, 'title': 'Events', 'screen': const EventsScreen()},
-      {'icon': Icons.people, 'title': 'Community', 'screen': const CommunityScreen()},
+      {'icon': Icons.compare_arrows, 'title': 'Compare', 'screen': const CompareScreen()},
+      {'icon': Icons.bar_chart, 'title': 'Statistics', 'screen': const StatisticsScreen()},
     ];
 
     return GridView.builder(
