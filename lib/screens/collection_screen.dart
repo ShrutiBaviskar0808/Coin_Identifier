@@ -236,17 +236,17 @@ class _CoinDetailScreenState extends State<CoinDetailScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    coin['title'] ?? 'Unknown Coin',
+                                    coin['name'] ?? 'Unknown Coin',
                                     style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textDark),
                                   ),
-                                  if (coin['year'] != null)
+                                  if (coin['main_information']?['years'] != null)
                                     Text(
-                                      'Year: ${coin['year']}',
+                                      'Years: ${coin['main_information']['years']}',
                                       style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray),
                                     ),
-                                  if (coin['value'] != null)
+                                  if (coin['price'] != null && coin['price'].toString().isNotEmpty)
                                     Text(
-                                      'Value: ${coin['value']}',
+                                      'Price: ${coin['price']}',
                                       style: GoogleFonts.poppins(fontSize: 13, color: AppColors.gold, fontWeight: FontWeight.w500),
                                     ),
                                 ],
@@ -274,7 +274,7 @@ class SingleCoinDetailScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text(coin['title'] ?? 'Coin Details', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+        title: Text(coin['name'] ?? 'Coin Details', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
@@ -295,14 +295,14 @@ class SingleCoinDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            _buildDetailCard('Title', coin['title'] ?? 'N/A'),
-            _buildDetailCard('Year', coin['year']?.toString() ?? 'N/A'),
-            _buildDetailCard('Value', coin['value']?.toString() ?? 'N/A'),
-            _buildDetailCard('Denomination', coin['denomination']?.toString() ?? 'N/A'),
-            _buildDetailCard('Metal', coin['metal']?.toString() ?? 'N/A'),
-            _buildDetailCard('Weight', coin['weight']?.toString() ?? 'N/A'),
-            _buildDetailCard('Diameter', coin['diameter']?.toString() ?? 'N/A'),
-            _buildDetailCard('Mintage', coin['mintage']?.toString() ?? 'N/A'),
+            _buildDetailCard('Name', coin['name'] ?? 'N/A'),
+            _buildDetailCard('Price', coin['price'] ?? 'N/A'),
+            _buildDetailCard('Years', coin['main_information']?['years']?.toString() ?? 'N/A'),
+            _buildDetailCard('Type', coin['main_information']?['type']?.toString() ?? 'N/A'),
+            _buildDetailCard('Composition', coin['physical_features']?['composition']?.toString() ?? 'N/A'),
+            _buildDetailCard('Weight', coin['physical_features']?['weight']?.toString() ?? 'N/A'),
+            _buildDetailCard('Diameter', coin['physical_features']?['diameter']?.toString() ?? 'N/A'),
+            _buildDetailCard('Shape', coin['physical_features']?['shape']?.toString() ?? 'N/A'),
           ],
         ),
       ),
