@@ -76,16 +76,31 @@ class LearnScreen extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.indigo.withValues(alpha: 0.05)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 15, offset: const Offset(0, 5))],
+          border: Border.all(color: Colors.indigo.withValues(alpha: 0.2), width: 1.5),
+          boxShadow: [BoxShadow(color: Colors.indigo.withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
         ),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(color: AppColors.lightGold.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(16)),
-              child: Icon(Icons.book, color: AppColors.gold, size: 32),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [Colors.indigo, Colors.indigo.shade700]),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.indigo.withValues(alpha: 0.4),
+                    blurRadius: 12,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: Icon(Icons.book, color: Colors.white, size: 32),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -93,11 +108,19 @@ class LearnScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Coin Terminology', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                  const SizedBox(height: 4),
                   Text('Learn numismatic terms', style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray)),
                 ],
               ),
             ),
-            Icon(Icons.arrow_forward_ios, color: AppColors.gold, size: 20),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.indigo.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(Icons.arrow_forward_ios, color: Colors.indigo, size: 20),
+            ),
           ],
         ),
       ),
