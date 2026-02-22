@@ -251,7 +251,22 @@ class CategoryDetailScreen extends StatelessWidget {
             pinned: true,
             backgroundColor: colors[0],
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(title, style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 18)),
+              titlePadding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+              title: Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.white,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withValues(alpha: 0.5),
+                      offset: const Offset(0, 2),
+                      blurRadius: 4,
+                    ),
+                  ],
+                ),
+              ),
               background: Stack(
                 fit: StackFit.expand,
                 children: [
