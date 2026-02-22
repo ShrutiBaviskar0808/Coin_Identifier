@@ -251,7 +251,7 @@ class CategoryDetailScreen extends StatelessWidget {
             pinned: true,
             backgroundColor: colors[0],
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+              titlePadding: const EdgeInsets.only(left: 56, bottom: 16, right: 16),
               title: Text(
                 title,
                 style: GoogleFonts.poppins(
@@ -282,35 +282,37 @@ class CategoryDetailScreen extends StatelessWidget {
                   Positioned(right: -30, top: 30, child: Icon(icon, size: 150, color: Colors.white.withValues(alpha: 0.1))),
                   Positioned(left: -20, bottom: 20, child: Icon(Icons.stars, size: 100, color: Colors.white.withValues(alpha: 0.1))),
                   Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 40),
-                        Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.2),
-                                blurRadius: 15,
-                                offset: const Offset(0, 8),
-                              ),
-                            ],
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 60),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.2),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.2),
+                                  blurRadius: 15,
+                                  offset: const Offset(0, 8),
+                                ),
+                              ],
+                            ),
+                            child: Icon(icon, size: 50, color: Colors.white),
                           ),
-                          child: Icon(icon, size: 50, color: Colors.white),
-                        ),
-                        const SizedBox(height: 12),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(20),
+                          const SizedBox(height: 12),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text('${items.length} Coins', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
                           ),
-                          child: Text('${items.length} Coins', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
