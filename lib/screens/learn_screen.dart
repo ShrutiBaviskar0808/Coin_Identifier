@@ -318,99 +318,282 @@ class ArticleScreen extends StatelessWidget {
 
   const ArticleScreen({super.key, required this.title, required this.description, required this.year, required this.value, required this.metal});
 
+  Color _getMetalColor() {
+    if (metal.toLowerCase().contains('gold')) return Color(0xFFFFD700);
+    if (metal.toLowerCase().contains('silver')) return Color(0xFFC0C0C0);
+    if (metal.toLowerCase().contains('copper')) return Color(0xFFB87333);
+    return AppColors.gold;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final metalColor = _getMetalColor();
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(title: Text(title, style: GoogleFonts.poppins(fontWeight: FontWeight.w600)), backgroundColor: Colors.white, elevation: 0),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                gradient: AppColors.goldGradient,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [BoxShadow(color: AppColors.gold.withValues(alpha: 0.3), blurRadius: 15, offset: const Offset(0, 5))],
-              ),
-              child: const Center(child: Icon(Icons.monetization_on, size: 80, color: Colors.white)),
-            ),
-            const SizedBox(height: 20),
-            Text(title, style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.textDark)),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10)],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 280,
+            pinned: true,
+            backgroundColor: metalColor,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                fit: StackFit.expand,
                 children: [
-                  _buildDetailColumn('Year', year, Icons.calendar_today, Colors.blue),
-                  _buildDetailColumn('Value', value, Icons.attach_money, Colors.green),
-                  _buildDetailColumn('Metal', metal, Icons.diamond, AppColors.gold),
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [metalColor, metalColor.withValues(alpha: 0.7)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                  ),
+                  Positioned(right: -50, top: 50, child: Icon(Icons.monetization_on, size: 200, color: Colors.white.withValues(alpha: 0.1))),
+                  Positioned(left: -30, bottom: 30, child: Icon(Icons.stars, size: 150, color: Colors.white.withValues(alpha: 0.1))),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 60),
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.2),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: Icon(Icons.monetization_on, size: 80, color: Colors.white),
+                        ),
+                        const SizedBox(height: 16),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(metal, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Text('Overview', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
-            const SizedBox(height: 12),
-            Text(description, style: GoogleFonts.poppins(fontSize: 16, color: AppColors.textGray, height: 1.6)),
-            const SizedBox(height: 20),
-            Text('Historical Significance', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
-            const SizedBox(height: 12),
-            Text('This coin represents an important piece of numismatic history. $title has been studied by collectors and historians for its unique characteristics and historical context. The coin\'s design, minting process, and circulation tell a fascinating story about the era in which it was created.', style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textGray, height: 1.8)),
-            const SizedBox(height: 20),
-            Text('Collector Information', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
-            const SizedBox(height: 12),
-            _buildInfoCard('Rarity', 'This coin is considered highly collectible due to its limited mintage and historical significance.'),
-            _buildInfoCard('Condition', 'Value varies significantly based on grade. Well-preserved specimens command premium prices.'),
-            _buildInfoCard('Authentication', 'Professional grading and authentication recommended for valuable specimens.'),
-          ],
-        ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: GoogleFonts.poppins(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(child: _buildStatCard('Year', year, Icons.calendar_today, Colors.blue)),
+                      const SizedBox(width: 12),
+                      Expanded(child: _buildStatCard('Value', value, Icons.attach_money, Colors.green)),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  _buildSectionCard(
+                    'Overview',
+                    description,
+                    Icons.description,
+                    Colors.purple,
+                  ),
+                  const SizedBox(height: 16),
+                  _buildSectionCard(
+                    'Historical Significance',
+                    'This coin represents an important piece of numismatic history. $title has been studied by collectors and historians for its unique characteristics and historical context. The coin\'s design, minting process, and circulation tell a fascinating story about the era in which it was created.',
+                    Icons.history,
+                    Colors.orange,
+                  ),
+                  const SizedBox(height: 24),
+                  Text('Collector Information', style: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                  const SizedBox(height: 12),
+                  _buildInfoCard('Rarity', 'This coin is considered highly collectible due to its limited mintage and historical significance.', Icons.star, Colors.amber),
+                  _buildInfoCard('Condition', 'Value varies significantly based on grade. Well-preserved specimens command premium prices.', Icons.grade, Colors.teal),
+                  _buildInfoCard('Authentication', 'Professional grading and authentication recommended for valuable specimens.', Icons.verified, Colors.indigo),
+                  const SizedBox(height: 20),
+                  _buildActionButtons(context, metalColor),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildDetailColumn(String label, String value, IconData icon, Color color) {
-    return Column(
-      children: [
-        Icon(icon, color: color, size: 28),
-        const SizedBox(height: 8),
-        Text(label, style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textGray)),
-        const SizedBox(height: 4),
-        Text(value, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textDark), textAlign: TextAlign.center),
-      ],
+  Widget _buildStatCard(String label, String value, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.white, color.withValues(alpha: 0.05)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
+        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.2), blurRadius: 15, offset: const Offset(0, 5))],
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.4),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Icon(icon, color: Colors.white, size: 28),
+          ),
+          const SizedBox(height: 12),
+          Text(label, style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textGray)),
+          const SizedBox(height: 4),
+          Text(value, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textDark), textAlign: TextAlign.center, maxLines: 2),
+        ],
+      ),
     );
   }
 
-  Widget _buildInfoCard(String title, String content) {
+  Widget _buildSectionCard(String title, String content, IconData icon, Color color) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8)],
+        gradient: LinearGradient(
+          colors: [Colors.white, color.withValues(alpha: 0.03)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: color.withValues(alpha: 0.2), width: 1.5),
+        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.info_outline, color: AppColors.gold, size: 20),
-              const SizedBox(width: 8),
-              Text(title, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: color.withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Icon(icon, color: Colors.white, size: 24),
+              ),
+              const SizedBox(width: 12),
+              Text(title, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(content, style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray, height: 1.5)),
+          const SizedBox(height: 16),
+          Text(content, style: GoogleFonts.poppins(fontSize: 15, color: AppColors.textGray, height: 1.7)),
         ],
       ),
+    );
+  }
+
+  Widget _buildInfoCard(String title, String content, IconData icon, Color color) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.white, color.withValues(alpha: 0.05)],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
+        boxShadow: [BoxShadow(color: color.withValues(alpha: 0.1), blurRadius: 10, offset: const Offset(0, 3))],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [color, color.withValues(alpha: 0.8)]),
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Icon(icon, color: Colors.white, size: 20),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                const SizedBox(height: 6),
+                Text(content, style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textGray, height: 1.5)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context, Color color) {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton.icon(
+            onPressed: () {},
+            icon: Icon(Icons.bookmark_border, color: Colors.white),
+            label: Text('Save', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: color,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              elevation: 5,
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: OutlinedButton.icon(
+            onPressed: () {},
+            icon: Icon(Icons.share, color: color),
+            label: Text('Share', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: color)),
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(color: color, width: 2),
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
