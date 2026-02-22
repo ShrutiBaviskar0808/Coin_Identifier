@@ -40,15 +40,16 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Color(0xFFFFFBF0)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+      body: SafeArea(
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.white, Color(0xFFFFFBF0)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
           ),
-        ),
-        child: Center(
+          child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

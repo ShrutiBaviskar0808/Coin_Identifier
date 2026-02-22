@@ -49,9 +49,9 @@ class ScanScreen extends StatelessWidget {
                   margin: const EdgeInsets.all(24),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.white.withOpacity(0.2)),
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
                   ),
                   child: Column(
                     children: [
@@ -74,7 +74,7 @@ class ScanScreen extends StatelessWidget {
                             gradient: AppColors.goldGradient,
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.gold.withOpacity(0.5),
+                                color: AppColors.gold.withValues(alpha: 0.5),
                                 blurRadius: 20,
                               ),
                             ],
