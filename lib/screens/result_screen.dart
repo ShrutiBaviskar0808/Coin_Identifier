@@ -5,7 +5,34 @@ import '../utils/constants.dart';
 
 
 class ResultScreen extends StatefulWidget {
-  const ResultScreen({super.key});
+  final String coinName;
+  final String country;
+  final String year;
+  final String value;
+  final String rarity;
+  final String material;
+  final String composition;
+  final String weight;
+  final String diameter;
+  final String thickness;
+  final String mint;
+  final String description;
+
+  const ResultScreen({
+    super.key,
+    this.coinName = 'American Gold Eagle',
+    this.country = 'United States',
+    this.year = '2023',
+    this.value = '\$2,100',
+    this.rarity = 'Rare',
+    this.material = 'Gold',
+    this.composition = '91.67% Gold, 3% Silver, 5.33% Copper',
+    this.weight = '33.931 grams',
+    this.diameter = '32.7 mm',
+    this.thickness = '2.87 mm',
+    this.mint = 'United States Mint',
+    this.description = 'The American Gold Eagle is an official gold bullion coin of the United States. Authorized under the Gold Bullion Coin Act of 1985, it was first released by the United States Mint in 1986. The coin is minted from gold mined in the United States and is guaranteed by the U.S. government to contain the stated amount of actual gold weight.',
+  });
 
   @override
   State<ResultScreen> createState() => _ResultScreenState();
@@ -87,7 +114,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
                 const SizedBox(height: 30),
                 Center(
                   child: Text(
-                    'American Gold Eagle',
+                    widget.coinName,
                     style: GoogleFonts.poppins(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
@@ -99,7 +126,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
                 const SizedBox(height: 8),
                 Center(
                   child: Text(
-                    'United States',
+                    widget.country,
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       color: AppColors.textGray,
@@ -109,7 +136,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
                 const SizedBox(height: 4),
                 Center(
                   child: Text(
-                    'Year: 2023',
+                    'Year: ${widget.year}',
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       color: AppColors.textGray,
@@ -159,7 +186,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
           ),
           const SizedBox(height: 8),
           Text(
-            '\$2,100',
+            widget.value,
             style: GoogleFonts.poppins(
               fontSize: 36,
               fontWeight: FontWeight.bold,
@@ -175,11 +202,11 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
     return Row(
       children: [
         Expanded(
-          child: _buildInfoBox('Rarity', 'Rare', Colors.orange),
+          child: _buildInfoBox('Rarity', widget.rarity, Colors.orange),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: _buildInfoBox('Material', 'Gold', AppColors.gold),
+          child: _buildInfoBox('Material', widget.material, AppColors.gold),
         ),
       ],
     );
@@ -249,11 +276,11 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
             ),
           ),
           const SizedBox(height: 16),
-          _buildDetailRow('Composition', '91.67% Gold, 3% Silver, 5.33% Copper'),
-          _buildDetailRow('Weight', '33.931 grams'),
-          _buildDetailRow('Diameter', '32.7 mm'),
-          _buildDetailRow('Thickness', '2.87 mm'),
-          _buildDetailRow('Mint', 'United States Mint'),
+          _buildDetailRow('Composition', widget.composition),
+          _buildDetailRow('Weight', widget.weight),
+          _buildDetailRow('Diameter', widget.diameter),
+          _buildDetailRow('Thickness', widget.thickness),
+          _buildDetailRow('Mint', widget.mint),
         ],
       ),
     );
@@ -319,12 +346,13 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
           ),
           const SizedBox(height: 12),
           Text(
-            'The American Gold Eagle is an official gold bullion coin of the United States. Authorized under the Gold Bullion Coin Act of 1985, it was first released by the United States Mint in 1986. The coin is minted from gold mined in the United States and is guaranteed by the U.S. government to contain the stated amount of actual gold weight.',
+            widget.description,
             style: GoogleFonts.poppins(
               fontSize: 14,
               color: AppColors.textDark,
               height: 1.6,
             ),
+            textAlign: TextAlign.justify,
           ),
         ],
       ),
