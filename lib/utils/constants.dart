@@ -7,6 +7,7 @@ class AppColors {
   static const lightGold = Color(0xFFF5E6C8);
   static const textDark = Color(0xFF2C2C2C);
   static const textGray = Color(0xFF757575);
+  static const background = Color(0xFFF8F8F8);
   
   static const goldGradient = LinearGradient(
     colors: [Color(0xFFD4AF37), Color(0xFFF5E6C8)],
