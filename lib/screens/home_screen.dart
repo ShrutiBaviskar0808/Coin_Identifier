@@ -12,9 +12,9 @@ import 'saved_coins_screen.dart';
 import 'grading_guide_screen.dart';
 import 'calculator_screen.dart';
 import 'news_screen.dart';
-import 'events_screen.dart';
+import 'dealers_screen.dart';
 import 'compare_screen.dart';
-import 'statistics_screen.dart';
+import 'price_alerts_screen.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -348,9 +348,9 @@ class _HomeContent extends StatelessWidget {
       {'icon': Icons.grade, 'title': 'Grading\nGuide', 'screen': const GradingGuideScreen(), 'colors': [Color(0xFFfa709a), Color(0xFFfee140)]},
       {'icon': Icons.calculate, 'title': 'Calculator', 'screen': const CalculatorScreen(), 'colors': [Color(0xFF30cfd0), Color(0xFF330867)]},
       {'icon': Icons.article, 'title': 'Coin\nNews', 'screen': const NewsScreen(), 'colors': [Color(0xFFa8edea), Color(0xFFfed6e3)]},
-      {'icon': Icons.event, 'title': 'Events', 'screen': const EventsScreen(), 'colors': [Color(0xFFff9a56), Color(0xFFff6a88)]},
+      {'icon': Icons.store, 'title': 'Dealers', 'screen': const DealersScreen(), 'colors': [Color(0xFFff9a56), Color(0xFFff6a88)]},
       {'icon': Icons.compare_arrows, 'title': 'Compare', 'screen': const CompareScreen(), 'colors': [Color(0xFF8EC5FC), Color(0xFFE0C3FC)]},
-      {'icon': Icons.bar_chart, 'title': 'Statistics', 'screen': const StatisticsScreen(), 'colors': [Color(0xFFfbc2eb), Color(0xFFa6c1ee)]},
+      {'icon': Icons.notifications_active, 'title': 'Alerts', 'screen': const PriceAlertsScreen(), 'colors': [Color(0xFFfbc2eb), Color(0xFFa6c1ee)]},
     ];
 
     return GridView.builder(
