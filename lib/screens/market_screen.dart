@@ -35,11 +35,19 @@ class MarketScreen extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 children: [
-                  _buildMarketCard('Gold', '+2.5%', '\$2,100/oz', true),
+                  _buildMarketCard('Gold', '+2.5%', '\$2,100/oz', true, '\$2,050', '\$2,150', '52-Week: \$1,800 - \$2,200'),
                   const SizedBox(height: 16),
-                  _buildMarketCard('Silver', '-0.8%', '\$25/oz', false),
+                  _buildMarketCard('Silver', '-0.8%', '\$25/oz', false, '\$26', '\$24.50', '52-Week: \$20 - \$28'),
                   const SizedBox(height: 16),
-                  _buildMarketCard('Platinum', '+1.2%', '\$1,050/oz', true),
+                  _buildMarketCard('Platinum', '+1.2%', '\$1,050/oz', true, '\$1,030', '\$1,065', '52-Week: \$900 - \$1,100'),
+                  const SizedBox(height: 24),
+                  Text('Trending Coins', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                  const SizedBox(height: 12),
+                  _buildCoinCard('American Eagle', '\$2,150', '+3.2%', '1 oz Gold', true),
+                  const SizedBox(height: 12),
+                  _buildCoinCard('Canadian Maple', '\$2,140', '+2.8%', '1 oz Gold', true),
+                  const SizedBox(height: 12),
+                  _buildCoinCard('Morgan Dollar', '\$45', '-1.5%', 'Silver', false),
                 ],
               ),
             ),
@@ -49,7 +57,7 @@ class MarketScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMarketCard(String metal, String change, String price, bool isUp) {
+  Widget _buildMarketCard(String metal, String change, String price, bool isUp, String open, String high, String range) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -63,47 +71,98 @@ class MarketScreen extends StatelessWidget {
           ),
         ],
       ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  gradient: AppColors.goldGradient,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Icon(isUp ? Icons.trending_up : Icons.trending_down, size: 30, color: Colors.white),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(metal, style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+                    Text(price, style: GoogleFonts.poppins(fontSize: 14, color: AppColors.textGray)),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: (isUp ? Colors.green : Colors.red).withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(change, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: isUp ? Colors.green : Colors.red)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildMetricColumn('Open', open),
+              _buildMetricColumn('High', high),
+              Expanded(child: Text(range, style: GoogleFonts.poppins(fontSize: 11, color: AppColors.textGray), textAlign: TextAlign.center)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMetricColumn(String label, String value) {
+    return Column(
+      children: [
+        Text(label, style: GoogleFonts.poppins(fontSize: 11, color: AppColors.textGray)),
+        const SizedBox(height: 4),
+        Text(value, style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+      ],
+    );
+  }
+
+  Widget _buildCoinCard(String name, String price, String change, String type, bool isUp) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+      ),
       child: Row(
         children: [
           Container(
-            width: 60,
-            height: 60,
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
-              gradient: AppColors.goldGradient,
-              borderRadius: BorderRadius.circular(16),
+              color: AppColors.lightGold.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.trending_up, size: 30, color: Colors.white),
+            child: Icon(Icons.monetization_on, color: AppColors.gold, size: 28),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  metal,
-                  style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textDark,
-                  ),
-                ),
-                Text(
-                  price,
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    color: AppColors.textGray,
-                  ),
-                ),
+                Text(name, style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+                Text(type, style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textGray)),
               ],
             ),
           ),
-          Text(
-            change,
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: isUp ? Colors.green : Colors.red,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(price, style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+              Text(change, style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w600, color: isUp ? Colors.green : Colors.red)),
+            ],
           ),
         ],
       ),
