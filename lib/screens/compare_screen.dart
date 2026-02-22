@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/constants.dart';
+import '../models/coin_data.dart';
 
-class CompareScreen extends StatelessWidget {
+class CompareScreen extends StatefulWidget {
   const CompareScreen({super.key});
+
+  @override
+  State<CompareScreen> createState() => _CompareScreenState();
+}
+
+class _CompareScreenState extends State<CompareScreen> {
+  final List<CoinData> allCoins = CoinData.getAllCoins();
+  CoinData? selectedCoin1;
+  CoinData? selectedCoin2;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedCoin1 = allCoins[0];
+    selectedCoin2 = allCoins[1];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,35 +48,42 @@ class CompareScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text('Compare Coins', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
                   const SizedBox(height: 8),
-                  Text('Side-by-side comparison of coin features', style: GoogleFonts.poppins(fontSize: 13, color: Colors.white.withValues(alpha: 0.9))),
+                  Text('Select and compare from 100+ coins', style: GoogleFonts.poppins(fontSize: 13, color: Colors.white.withValues(alpha: 0.9))),
                 ],
               ),
             ),
             const SizedBox(height: 20),
             Row(
               children: [
-                Expanded(child: _buildCoinCard('American Gold Eagle', '🦅', '\$2,100', '91.67% Gold', '33.93g', Colors.blue)),
+                Expanded(child: _buildCoinSelector(1)),
                 const SizedBox(width: 12),
-                Expanded(child: _buildCoinCard('Canadian Maple', '🍁', '\$1,850', '99.99% Gold', '31.10g', Colors.red)),
+                Expanded(child: _buildCoinSelector(2)),
               ],
             ),
             const SizedBox(height: 20),
-            _buildComparisonRow('Value', '\$2,100', '\$1,850', Colors.green),
-            _buildComparisonRow('Purity', '91.67%', '99.99%', Colors.orange),
-            _buildComparisonRow('Weight', '33.93g', '31.10g', Colors.blue),
-            _buildComparisonRow('Diameter', '32.7mm', '30mm', Colors.purple),
-            _buildComparisonRow('Year', '2023', '2023', Colors.teal),
-            const SizedBox(height: 20),
-            _buildSummaryCard(),
+            if (selectedCoin1 != null && selectedCoin2 != null) ...[
+              _buildComparisonRow('Value', selectedCoin1!.price, selectedCoin2!.price, Colors.green),
+              _buildComparisonRow('Purity', selectedCoin1!.purity, selectedCoin2!.purity, Colors.orange),
+              _buildComparisonRow('Weight', selectedCoin1!.weight, selectedCoin2!.weight, Colors.blue),
+              _buildComparisonRow('Diameter', selectedCoin1!.diameter, selectedCoin2!.diameter, Colors.purple),
+              _buildComparisonRow('Year', selectedCoin1!.year, selectedCoin2!.year, Colors.teal),
+              _buildComparisonRow('Country', selectedCoin1!.country, selectedCoin2!.country, Colors.red),
+              _buildComparisonRow('Metal', selectedCoin1!.metal, selectedCoin2!.metal, Colors.amber),
+              const SizedBox(height: 20),
+              _buildSummaryCard(),
+            ],
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCoinCard(String name, String icon, String price, String purity, String weight, Color color) {
+  Widget _buildCoinSelector(int coinNumber) {
+    final selectedCoin = coinNumber == 1 ? selectedCoin1 : selectedCoin2;
+    final color = coinNumber == 1 ? Colors.blue : Colors.red;
+
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Colors.white, color.withValues(alpha: 0.05)],
@@ -86,13 +110,105 @@ class CompareScreen extends StatelessWidget {
                 ),
               ],
             ),
-            child: Center(child: Text(icon, style: const TextStyle(fontSize: 32))),
+            child: Center(child: Text(selectedCoin?.icon ?? '🪙', style: const TextStyle(fontSize: 32))),
           ),
           const SizedBox(height: 12),
-          Text(name, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textDark), textAlign: TextAlign.center),
+          Text(selectedCoin?.name ?? 'Select Coin', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.textDark), textAlign: TextAlign.center, maxLines: 2),
           const SizedBox(height: 8),
-          Text(price, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.gold)),
+          Text(selectedCoin?.price ?? '', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.gold)),
+          const SizedBox(height: 12),
+          ElevatedButton(
+            onPressed: () => _showCoinPicker(coinNumber),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: color,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: Text('Change', style: GoogleFonts.poppins(fontSize: 12, color: Colors.white)),
+          ),
         ],
+      ),
+    );
+  }
+
+  void _showCoinPicker(int coinNumber) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.7,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                gradient: AppColors.goldGradient,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+              ),
+              child: Row(
+                children: [
+                  Text('Select Coin $coinNumber', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: allCoins.length,
+                itemBuilder: (context, index) {
+                  final coin = allCoins[index];
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        if (coinNumber == 1) {
+                          selectedCoin1 = coin;
+                        } else {
+                          selectedCoin2 = coin;
+                        }
+                      });
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: AppColors.background,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColors.lightGold.withValues(alpha: 0.3)),
+                      ),
+                      child: Row(
+                        children: [
+                          Text(coin.icon, style: const TextStyle(fontSize: 28)),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(coin.name, style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+                                Text('${coin.country} • ${coin.metal}', style: GoogleFonts.poppins(fontSize: 11, color: AppColors.textGray)),
+                              ],
+                            ),
+                          ),
+                          Text(coin.price, style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.gold)),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -126,6 +242,9 @@ class CompareScreen extends StatelessWidget {
   }
 
   Widget _buildSummaryCard() {
+    if (selectedCoin1 == null || selectedCoin2 == null) return const SizedBox();
+
+    final summary = _generateSummary();
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -138,9 +257,55 @@ class CompareScreen extends StatelessWidget {
         children: [
           Text('Comparison Summary', style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
           const SizedBox(height: 12),
-          Text('• Canadian Maple has higher purity (99.99%)\n• American Eagle has higher value (\$2,100)\n• American Eagle is heavier (33.93g)\n• Both are excellent investment options', style: GoogleFonts.poppins(fontSize: 13, color: Colors.white, height: 1.6)),
+          Text(summary, style: GoogleFonts.poppins(fontSize: 13, color: Colors.white, height: 1.6)),
         ],
       ),
     );
+  }
+
+  String _generateSummary() {
+    final coin1 = selectedCoin1!;
+    final coin2 = selectedCoin2!;
+    
+    final price1 = double.tryParse(coin1.price.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
+    final price2 = double.tryParse(coin2.price.replaceAll(RegExp(r'[^\d.]'), '')) ?? 0;
+    
+    final purity1 = double.tryParse(coin1.purity.replaceAll('%', '')) ?? 0;
+    final purity2 = double.tryParse(coin2.purity.replaceAll('%', '')) ?? 0;
+    
+    final weight1 = double.tryParse(coin1.weight.replaceAll('g', '')) ?? 0;
+    final weight2 = double.tryParse(coin2.weight.replaceAll('g', '')) ?? 0;
+
+    String summary = '';
+    
+    if (price1 > price2) {
+      summary += '• ${coin1.name} has higher value (${coin1.price})\n';
+    } else if (price2 > price1) {
+      summary += '• ${coin2.name} has higher value (${coin2.price})\n';
+    } else {
+      summary += '• Both coins have equal value\n';
+    }
+    
+    if (purity1 > purity2) {
+      summary += '• ${coin1.name} has higher purity (${coin1.purity})\n';
+    } else if (purity2 > purity1) {
+      summary += '• ${coin2.name} has higher purity (${coin2.purity})\n';
+    }
+    
+    if (weight1 > weight2) {
+      summary += '• ${coin1.name} is heavier (${coin1.weight})\n';
+    } else if (weight2 > weight1) {
+      summary += '• ${coin2.name} is heavier (${coin2.weight})\n';
+    }
+    
+    if (coin1.metal == coin2.metal) {
+      summary += '• Both are made of ${coin1.metal}\n';
+    } else {
+      summary += '• Different metals: ${coin1.metal} vs ${coin2.metal}\n';
+    }
+    
+    summary += '• Both are excellent collectibles';
+    
+    return summary;
   }
 }
