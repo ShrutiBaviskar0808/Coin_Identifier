@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/constants.dart';
 import 'result_screen.dart';
+import 'dart:async';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -12,6 +13,17 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  int _currentFactIndex = 0;
+  Timer? _factTimer;
+
+  final List<String> _funFacts = [
+    'Coins were first used in 600 BC',
+    'Gold coins are soft metal coins',
+    'The first coins were made in Lydia',
+    'Ancient coins had holes for stringing',
+    'Some coins are worth millions today',
+    'Coin collecting is called numismatics',
+  ];
 
   @override
   void initState() {
@@ -21,7 +33,15 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
       vsync: this,
     )..repeat();
 
-    Future.delayed(const Duration(seconds: 3), () {
+    _factTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
+      if (mounted) {
+        setState(() {
+          _currentFactIndex = (_currentFactIndex + 1) % _funFacts.length;
+        });
+      }
+    });
+
+    Future.delayed(const Duration(seconds: 4), () {
       if (mounted) {
         Navigator.pushReplacement(
           context,
@@ -34,6 +54,7 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
   @override
   void dispose() {
     _controller.dispose();
+    _factTimer?.cancel();
     super.dispose();
   }
 
@@ -86,6 +107,27 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     color: AppColors.textGray,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.lightGold.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    child: Text(
+                      _funFacts[_currentFactIndex],
+                      key: ValueKey<int>(_currentFactIndex),
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: AppColors.textDark,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
                   ),
                 ),
               ],
