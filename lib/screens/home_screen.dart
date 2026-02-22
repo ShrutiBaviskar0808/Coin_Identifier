@@ -181,20 +181,32 @@ class _HomeContent extends StatelessWidget {
                         ],
                       ),
                     ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.25), borderRadius: BorderRadius.circular(20)),
+                      child: Row(
+                        children: [
+                          Icon(Icons.verified, size: 14, color: Colors.white),
+                          const SizedBox(width: 4),
+                          Text('98% Accurate', style: GoogleFonts.poppins(fontSize: 11, color: Colors.white, fontWeight: FontWeight.w600)),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 const Spacer(),
-                Text('Identify Any Coin', style: GoogleFonts.poppins(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white)),
+                Text('Discover Your Coins', style: GoogleFonts.poppins(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
                 const SizedBox(height: 8),
-                Text('Instant recognition with 98% accuracy', style: GoogleFonts.poppins(fontSize: 13, color: Colors.white.withValues(alpha: 0.95))),
+                Text('Explore collection, market trends & history', style: GoogleFonts.poppins(fontSize: 13, color: Colors.white.withValues(alpha: 0.95))),
                 const SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
                       child: ElevatedButton.icon(
-                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ScanScreen())),
-                        icon: const Icon(Icons.camera_alt, size: 20),
-                        label: Text('Scan Now', style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600)),
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MarketScreen())),
+                        icon: const Icon(Icons.trending_up, size: 20),
+                        label: Text('Market Trends', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: AppColors.gold,
@@ -208,8 +220,8 @@ class _HomeContent extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.25), borderRadius: BorderRadius.circular(12)),
                       child: IconButton(
-                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ScanHistoryScreen())),
-                        icon: const Icon(Icons.history, color: Colors.white, size: 24),
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LearnScreen())),
+                        icon: const Icon(Icons.school, color: Colors.white, size: 24),
                       ),
                     ),
                   ],
