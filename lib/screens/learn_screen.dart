@@ -341,83 +341,79 @@ class CategoryDetailScreen extends StatelessWidget {
   }
 
   Widget _buildCoinItem(BuildContext context, Map<String, String> item, List<Color> colors) {
-    return InkWell(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleScreen(title: item['title']!, description: item['desc']!, year: item['year']!, value: item['value']!, metal: item['metal']!))),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, colors[0].withValues(alpha: 0.05)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.white, colors[0].withValues(alpha: 0.05)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: colors[0].withValues(alpha: 0.2), width: 1.5),
+        boxShadow: [BoxShadow(color: colors[0].withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: colors),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colors[0].withValues(alpha: 0.4),
+                        blurRadius: 12,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: Center(child: Text(item['image']!, style: const TextStyle(fontSize: 36))),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(item['title']!, style: GoogleFonts.poppins(fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                      const SizedBox(height: 6),
+                      Text(item['desc']!, style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray, height: 1.4), maxLines: 2, overflow: TextOverflow.ellipsis),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: colors[0].withValues(alpha: 0.2), width: 1.5),
-          boxShadow: [BoxShadow(color: colors[0].withValues(alpha: 0.15), blurRadius: 15, offset: const Offset(0, 5))],
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: colors),
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: colors[0].withValues(alpha: 0.4),
-                          blurRadius: 12,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
-                    ),
-                    child: Center(child: Text(item['image']!, style: const TextStyle(fontSize: 36))),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(item['title']!, style: GoogleFonts.poppins(fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.textDark)),
-                        const SizedBox(height: 6),
-                        Text(item['desc']!, style: GoogleFonts.poppins(fontSize: 13, color: AppColors.textGray, height: 1.4), maxLines: 2, overflow: TextOverflow.ellipsis),
-                      ],
-                    ),
-                  ),
-                  Icon(Icons.arrow_forward_ios, color: colors[0], size: 18),
-                ],
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [colors[0].withValues(alpha: 0.08), colors[1].withValues(alpha: 0.05)],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [colors[0].withValues(alpha: 0.08), colors[1].withValues(alpha: 0.05)],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildInfoItem(Icons.calendar_today, 'Year', item['year']!, colors[0]),
-                  Container(width: 1, height: 30, color: colors[0].withValues(alpha: 0.2)),
-                  _buildInfoItem(Icons.attach_money, 'Value', item['value']!, colors[0]),
-                  Container(width: 1, height: 30, color: colors[0].withValues(alpha: 0.2)),
-                  _buildInfoItem(Icons.diamond, 'Metal', item['metal']!, colors[0]),
-                ],
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildInfoItem(Icons.calendar_today, 'Year', item['year']!, colors[0]),
+                Container(width: 1, height: 30, color: colors[0].withValues(alpha: 0.2)),
+                _buildInfoItem(Icons.attach_money, 'Value', item['value']!, colors[0]),
+                Container(width: 1, height: 30, color: colors[0].withValues(alpha: 0.2)),
+                _buildInfoItem(Icons.diamond, 'Metal', item['metal']!, colors[0]),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
