@@ -6,6 +6,8 @@ import 'collection_screen.dart';
 import 'profile_screen.dart';
 import 'market_screen.dart';
 import 'learn_screen.dart';
+import 'scan_history_screen.dart';
+import 'saved_coins_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -152,10 +154,10 @@ class _HomeContent extends StatelessWidget {
 
   Widget _buildQuickActions(BuildContext context) {
     final actions = [
-      {'icon': Icons.photo_library, 'title': 'Identify from\nGallery', 'screen': const ScanScreen()},
-      {'icon': Icons.collections_outlined, 'title': 'Coin\nCollection', 'screen': const CollectionScreen()},
       {'icon': Icons.trending_up, 'title': 'Market\nValue', 'screen': const MarketScreen()},
       {'icon': Icons.school_outlined, 'title': 'Learn\nCoins', 'screen': const LearnScreen()},
+      {'icon': Icons.history, 'title': 'Scan\nHistory', 'screen': const ScanHistoryScreen()},
+      {'icon': Icons.bookmark, 'title': 'Saved\nCoins', 'screen': const SavedCoinsScreen()},
     ];
 
     return GridView.builder(
