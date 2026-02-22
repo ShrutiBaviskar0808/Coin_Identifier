@@ -9,6 +9,8 @@ import 'market_screen.dart';
 import 'learn_screen.dart';
 import 'scan_history_screen.dart';
 import 'saved_coins_screen.dart';
+import 'grading_guide_screen.dart';
+import 'authentication_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -182,16 +184,18 @@ class _HomeContent extends StatelessWidget {
       {'icon': Icons.school_outlined, 'title': 'Learn\nCoins', 'screen': const LearnScreen()},
       {'icon': Icons.history, 'title': 'Scan\nHistory', 'screen': const ScanHistoryScreen()},
       {'icon': Icons.bookmark, 'title': 'Saved\nCoins', 'screen': const SavedCoinsScreen()},
+      {'icon': Icons.grade, 'title': 'Grading\nGuide', 'screen': const GradingGuideScreen()},
+      {'icon': Icons.verified_user, 'title': 'Authentication', 'screen': const AuthenticationScreen()},
     ];
 
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        childAspectRatio: 1.1,
+        crossAxisCount: 3,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        childAspectRatio: 0.95,
       ),
       itemCount: actions.length,
       itemBuilder: (context, index) {
