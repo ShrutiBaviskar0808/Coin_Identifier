@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: AppColors.gold.withOpacity(0.3),
+              color: AppColors.gold.withValues(alpha: 0.3),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -92,7 +92,7 @@ class HomeScreen extends StatelessWidget {
             Positioned(
               right: -20,
               top: -20,
-              child: Icon(Icons.monetization_on, size: 150, color: Colors.white.withOpacity(0.2)),
+              child: Icon(Icons.monetization_on, size: 150, color: Colors.white.withValues(alpha: 0.2)),
             ),
             Padding(
               padding: const EdgeInsets.all(24.0),
@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                     'Identify any coin instantly',
                     style: GoogleFonts.poppins(
                       fontSize: 14,
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                     ),
                   ),
                 ],
@@ -155,7 +155,7 @@ class HomeScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 15,
                   offset: const Offset(0, 5),
                 ),

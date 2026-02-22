@@ -50,45 +50,46 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
             ),
           ),
           child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RotationTransition(
-                turns: _controller,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: AppColors.goldGradient,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.gold.withOpacity(0.3),
-                        blurRadius: 30,
-                      ),
-                    ],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RotationTransition(
+                  turns: _controller,
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: AppColors.goldGradient,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.gold.withValues(alpha: 0.3),
+                          blurRadius: 30,
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Icons.monetization_on, size: 50, color: Colors.white),
                   ),
-                  child: const Icon(Icons.monetization_on, size: 50, color: Colors.white),
                 ),
-              ),
-              const SizedBox(height: 40),
-              Text(
-                'Analyzing Coin...',
-                style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textDark,
+                const SizedBox(height: 40),
+                Text(
+                  'Analyzing Coin...',
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textDark,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Please wait',
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: AppColors.textGray,
+                const SizedBox(height: 12),
+                Text(
+                  'Please wait',
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    color: AppColors.textGray,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

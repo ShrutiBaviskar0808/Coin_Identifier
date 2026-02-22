@@ -67,7 +67,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
                           gradient: AppColors.goldGradient,
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.gold.withOpacity(0.4),
+                              color: AppColors.gold.withValues(alpha: 0.4),
                               blurRadius: 40,
                               offset: const Offset(0, 20),
                             ),
@@ -119,7 +119,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.gold.withOpacity(0.2),
+            color: AppColors.gold.withValues(alpha: 0.2),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
@@ -129,9 +129,9 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildInfoItem('Year', '2023'),
-          Container(width: 1, height: 40, color: Colors.white.withOpacity(0.3)),
+          Container(width: 1, height: 40, color: Colors.white.withValues(alpha: 0.3)),
           _buildInfoItem('Value', '\$2,100'),
-          Container(width: 1, height: 40, color: Colors.white.withOpacity(0.3)),
+          Container(width: 1, height: 40, color: Colors.white.withValues(alpha: 0.3)),
           _buildInfoItem('Rarity', 'Common'),
         ],
       ),
@@ -154,7 +154,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
           label,
           style: GoogleFonts.poppins(
             fontSize: 12,
-            color: Colors.white.withOpacity(0.8),
+            color: Colors.white.withValues(alpha: 0.8),
           ),
         ),
       ],
