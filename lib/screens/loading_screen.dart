@@ -113,7 +113,7 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   decoration: BoxDecoration(
-                    color: AppColors.lightGold.withOpacity(0.3),
+                    color: AppColors.lightGold.withValues(alpha:0.3),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: AnimatedSwitcher(

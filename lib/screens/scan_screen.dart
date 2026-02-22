@@ -136,7 +136,7 @@ class _ScanScreenState extends State<ScanScreen> {
                   margin: const EdgeInsets.all(24),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.black.withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
@@ -167,7 +167,7 @@ class _ScanScreenState extends State<ScanScreen> {
                                 gradient: AppColors.goldGradient,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.gold.withOpacity(0.5),
+                                    color: AppColors.gold.withValues(alpha: 0.5),
                                     blurRadius: 20,
                                   ),
                                 ],
@@ -194,7 +194,7 @@ class CircleOverlayPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.black.withOpacity(0.6)
+      ..color = Colors.black.withValues(alpha: 0.6)
       ..style = PaintingStyle.fill;
 
     final circlePaint = Paint()

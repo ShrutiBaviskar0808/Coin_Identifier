@@ -295,7 +295,7 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.lightGold.withValues(alpha:0.2),
+        color: AppColors.lightGold.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppColors.gold.withValues(alpha: 0.2)),
       ),
