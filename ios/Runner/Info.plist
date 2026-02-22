@@ -47,5 +47,7 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera access is required to scan and identify coins</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo library access is required to identify coins from your gallery</string>
 </dict>
 </plist>

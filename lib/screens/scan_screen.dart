@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:camera/camera.dart';
+import 'package:image_picker/image_picker.dart';
 import '../utils/constants.dart';
 import 'loading_screen.dart';
 
@@ -12,27 +14,83 @@ class ScanScreen extends StatefulWidget {
 }
 
 class _ScanScreenState extends State<ScanScreen> {
+  CameraController? _cameraController;
+  bool _isFlashOn = false;
+  bool _isCameraInitialized = false;
+
   @override
   void initState() {
     super.initState();
-    _requestCameraPermission();
+    _initializeCamera();
   }
 
-  Future<void> _requestCameraPermission() async {
+  Future<void> _initializeCamera() async {
     final status = await Permission.camera.request();
-    if (status.isDenied || status.isPermanentlyDenied) {
+    if (status.isGranted) {
+      final cameras = await availableCameras();
+      if (cameras.isNotEmpty) {
+        _cameraController = CameraController(
+          cameras.first,
+          ResolutionPreset.high,
+          enableAudio: false,
+        );
+        await _cameraController!.initialize();
+        if (mounted) {
+          setState(() => _isCameraInitialized = true);
+        }
+      }
+    } else {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Camera permission is required to scan coins'),
+            content: const Text('Camera permission is required'),
             action: SnackBarAction(
               label: 'Settings',
               onPressed: () => openAppSettings(),
             ),
           ),
         );
+        Navigator.pop(context);
       }
     }
+  }
+
+  Future<void> _toggleFlash() async {
+    if (_cameraController != null) {
+      setState(() => _isFlashOn = !_isFlashOn);
+      await _cameraController!.setFlashMode(
+        _isFlashOn ? FlashMode.torch : FlashMode.off,
+      );
+    }
+  }
+
+  Future<void> _pickFromGallery() async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null && mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const LoadingScreen()),
+      );
+    }
+  }
+
+  Future<void> _captureImage() async {
+    if (_cameraController != null && _cameraController!.value.isInitialized) {
+      await _cameraController!.takePicture();
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const LoadingScreen()),
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _cameraController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,18 +99,15 @@ class _ScanScreenState extends State<ScanScreen> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Center(
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.gold, width: 3),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: CustomPaint(
-                painter: CornerPainter(),
-              ),
-            ),
+          if (_isCameraInitialized && _cameraController != null)
+            SizedBox.expand(
+              child: CameraPreview(_cameraController!),
+            )
+          else
+            const Center(child: CircularProgressIndicator(color: Colors.white)),
+          CustomPaint(
+            size: Size.infinite,
+            painter: CircleOverlayPainter(),
           ),
           SafeArea(
             child: Column(
@@ -67,8 +122,11 @@ class _ScanScreenState extends State<ScanScreen> {
                       ),
                       const Spacer(),
                       IconButton(
-                        icon: const Icon(Icons.flash_off, color: Colors.white),
-                        onPressed: () {},
+                        icon: Icon(
+                          _isFlashOn ? Icons.flash_on : Icons.flash_off,
+                          color: Colors.white,
+                        ),
+                        onPressed: _toggleFlash,
                       ),
                     ],
                   ),
@@ -78,14 +136,13 @@ class _ScanScreenState extends State<ScanScreen> {
                   margin: const EdgeInsets.all(24),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.1),
+                    color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
                   ),
                   child: Column(
                     children: [
                       Text(
-                        'Position coin within frame',
+                        'Place coin inside circle',
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: Colors.white,
@@ -93,23 +150,33 @@ class _ScanScreenState extends State<ScanScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      GestureDetector(
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LoadingScreen())),
-                        child: Container(
-                          width: 70,
-                          height: 70,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: AppColors.goldGradient,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.gold.withValues(alpha: 0.5),
-                                blurRadius: 20,
-                              ),
-                            ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            onPressed: _pickFromGallery,
+                            icon: const Icon(Icons.photo_library, color: Colors.white, size: 30),
                           ),
-                          child: const Icon(Icons.camera, size: 35, color: Colors.white),
-                        ),
+                          GestureDetector(
+                            onTap: _captureImage,
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: AppColors.goldGradient,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.gold.withOpacity(0.5),
+                                    blurRadius: 20,
+                                  ),
+                                ],
+                              ),
+                              child: const Icon(Icons.camera, size: 35, color: Colors.white),
+                            ),
+                          ),
+                          const SizedBox(width: 50),
+                        ],
                       ),
                     ],
                   ),
@@ -123,27 +190,29 @@ class _ScanScreenState extends State<ScanScreen> {
   }
 }
 
-class CornerPainter extends CustomPainter {
+class CircleOverlayPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
+      ..color = Colors.black.withOpacity(0.6)
+      ..style = PaintingStyle.fill;
+
+    final circlePaint = Paint()
       ..color = AppColors.gold
-      ..strokeWidth = 4
+      ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
 
-    const cornerLength = 30.0;
-    
-    canvas.drawLine(const Offset(0, 0), const Offset(cornerLength, 0), paint);
-    canvas.drawLine(const Offset(0, 0), const Offset(0, cornerLength), paint);
-    
-    canvas.drawLine(Offset(size.width, 0), Offset(size.width - cornerLength, 0), paint);
-    canvas.drawLine(Offset(size.width, 0), Offset(size.width, cornerLength), paint);
-    
-    canvas.drawLine(Offset(0, size.height), Offset(cornerLength, size.height), paint);
-    canvas.drawLine(Offset(0, size.height), Offset(0, size.height - cornerLength), paint);
-    
-    canvas.drawLine(Offset(size.width, size.height), Offset(size.width - cornerLength, size.height), paint);
-    canvas.drawLine(Offset(size.width, size.height), Offset(size.width, size.height - cornerLength), paint);
+    final path = Path()
+      ..addRect(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    final center = Offset(size.width / 2, size.height / 2);
+    const radius = 140.0;
+
+    path.addOval(Rect.fromCircle(center: center, radius: radius));
+    path.fillType = PathFillType.evenOdd;
+
+    canvas.drawPath(path, paint);
+    canvas.drawCircle(center, radius, circlePaint);
   }
 
   @override
