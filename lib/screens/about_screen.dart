@@ -14,55 +14,57 @@ class AboutScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              gradient: AppColors.goldGradient,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [BoxShadow(color: AppColors.gold.withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 10))],
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                gradient: AppColors.goldGradient,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [BoxShadow(color: AppColors.gold.withValues(alpha: 0.3), blurRadius: 20, offset: const Offset(0, 10))],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                    child: Icon(Icons.monetization_on, size: 50, color: AppColors.gold),
+                  ),
+                  const SizedBox(height: 16),
+                  Text('Coin Identifier', style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
+                  const SizedBox(height: 8),
+                  Text('Version 1.0.0', style: GoogleFonts.poppins(fontSize: 14, color: Colors.white.withValues(alpha: 0.9))),
+                ],
+              ),
             ),
-            child: Column(
-              children: [
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
-                  child: Icon(Icons.monetization_on, size: 50, color: AppColors.gold),
-                ),
-                const SizedBox(height: 16),
-                Text('Coin Identifier', style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
-                const SizedBox(height: 8),
-                Text('Version 1.0.0', style: GoogleFonts.poppins(fontSize: 14, color: Colors.white.withValues(alpha: 0.9))),
-              ],
+            const SizedBox(height: 20),
+            _buildInfoSection('About the App', 'Coin Identifier is your ultimate companion for identifying, collecting, and learning about coins from around the world. Using advanced AI technology and a comprehensive database of over 100,000 coins, we help collectors, enthusiasts, and curious minds discover the fascinating world of numismatics.'),
+            _buildFeaturesList(),
+            _buildInfoSection('Our Mission', 'To make coin collecting accessible and enjoyable for everyone. We believe that every coin tells a story, and our mission is to help you discover those stories through cutting-edge technology and educational resources.'),
+            _buildInfoSection('Technology', 'Our app uses state-of-the-art machine learning algorithms trained on millions of coin images. The AI model continuously learns and improves, ensuring accurate identification of coins from different eras, countries, and conditions.'),
+            _buildInfoSection('Database', 'Our extensive database includes:\n\n• Ancient coins from civilizations dating back 2,500 years\n• Modern coins from over 195 countries\n• Commemorative and special edition coins\n• Error coins and rare variants\n• Historical context and market values'),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
+              ),
+              child: Column(
+                children: [
+                  Text('© 2024 Coin Identifier', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
+                  const SizedBox(height: 8),
+                  Text('All rights reserved', style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textGray)),
+                  const SizedBox(height: 16),
+                  Text('Made with ❤️ for coin collectors worldwide', style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textGray)),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          _buildInfoSection('About the App', 'Coin Identifier is your ultimate companion for identifying, collecting, and learning about coins from around the world. Using advanced AI technology and a comprehensive database of over 100,000 coins, we help collectors, enthusiasts, and curious minds discover the fascinating world of numismatics.'),
-          _buildFeaturesList(),
-          _buildInfoSection('Our Mission', 'To make coin collecting accessible and enjoyable for everyone. We believe that every coin tells a story, and our mission is to help you discover those stories through cutting-edge technology and educational resources.'),
-          _buildInfoSection('Technology', 'Our app uses state-of-the-art machine learning algorithms trained on millions of coin images. The AI model continuously learns and improves, ensuring accurate identification of coins from different eras, countries, and conditions.'),
-          _buildInfoSection('Database', 'Our extensive database includes:\n\n• Ancient coins from civilizations dating back 2,500 years\n• Modern coins from over 195 countries\n• Commemorative and special edition coins\n• Error coins and rare variants\n• Historical context and market values'),
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 3))],
-            ),
-            child: Column(
-              children: [
-                Text('© 2024 Coin Identifier', style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textDark)),
-                const SizedBox(height: 8),
-                Text('All rights reserved', style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textGray)),
-                const SizedBox(height: 16),
-                Text('Made with ❤️ for coin collectors worldwide', style: GoogleFonts.poppins(fontSize: 12, color: AppColors.textGray)),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
