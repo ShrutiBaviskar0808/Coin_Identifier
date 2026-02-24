@@ -3,8 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
 import '../utils/constants.dart';
-import 'loading_screen.dart';
-import 'home_screen.dart';
+import 'coin_details_screen.dart';
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen({super.key});
@@ -17,6 +16,9 @@ class _ScanScreenState extends State<ScanScreen> {
   CameraController? _cameraController;
   bool _isFlashOn = false;
   bool _isCameraInitialized = false;
+  String? _frontImage;
+  String? _reverseImage;
+  bool _isCapturingFront = true;
 
   @override
   void initState() {
@@ -52,22 +54,43 @@ class _ScanScreenState extends State<ScanScreen> {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null && mounted) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const LoadingScreen()),
-      );
+      _processImage(image.path);
     }
   }
 
   Future<void> _captureImage() async {
     if (_cameraController != null && _cameraController!.value.isInitialized) {
-      await _cameraController!.takePicture();
+      final image = await _cameraController!.takePicture();
       if (mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const LoadingScreen()),
-        );
+        _processImage(image.path);
       }
+    }
+  }
+
+  void _processImage(String imagePath) {
+    setState(() {
+      if (_isCapturingFront) {
+        _frontImage = imagePath;
+        _isCapturingFront = false;
+      } else {
+        _reverseImage = imagePath;
+      }
+    });
+
+    if (_frontImage != null && _reverseImage != null) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CoinDetailsScreen(
+                frontImage: _frontImage!,
+                reverseImage: _reverseImage!,
+              ),
+            ),
+          );
+        }
+      });
     }
   }
 
@@ -102,11 +125,7 @@ class _ScanScreenState extends State<ScanScreen> {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.arrow_back, color: Colors.white),
-                        onPressed: () => Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (_) => const HomeScreen()),
-                          (route) => false,
-                        ),
+                        onPressed: () => Navigator.pop(context),
                       ),
                       const Spacer(),
                       IconButton(
@@ -120,6 +139,27 @@ class _ScanScreenState extends State<ScanScreen> {
                   ),
                 ),
                 const Spacer(),
+                if (_frontImage != null)
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withValues(alpha: 0.8),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.check_circle, color: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Front side captured',
+                          style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                const SizedBox(height: 16),
                 Container(
                   margin: const EdgeInsets.all(24),
                   padding: const EdgeInsets.all(20),
@@ -130,11 +170,19 @@ class _ScanScreenState extends State<ScanScreen> {
                   child: Column(
                     children: [
                       Text(
-                        'Place coin inside circle',
+                        _isCapturingFront ? 'Capture Front Side' : 'Capture Reverse Side',
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: Colors.white,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Place coin inside circle',
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: Colors.white70,
                         ),
                       ),
                       const SizedBox(height: 20),
