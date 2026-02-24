@@ -279,8 +279,6 @@ class CategoryDetailScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(right: -50, top: -20, child: Icon(icon, size: 180, color: Colors.white.withValues(alpha: 0.08))),
-                  Positioned(left: -40, bottom: -30, child: Icon(Icons.stars, size: 120, color: Colors.white.withValues(alpha: 0.08))),
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 60),
