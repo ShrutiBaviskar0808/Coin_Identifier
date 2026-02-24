@@ -13,11 +13,12 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SafeArea(
+              bottom: false,
+              child: Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -68,6 +69,7 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
               Padding(
                 padding: const EdgeInsets.all(24),
                 child: Column(
