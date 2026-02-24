@@ -281,7 +281,7 @@ class CategoryDetailScreen extends StatelessWidget {
                   ),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 60),
+                      padding: const EdgeInsets.only(top: 40, bottom: 50),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
