@@ -70,27 +70,26 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
-              Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  children: [
-                    _buildMenuItem(Icons.emoji_events, 'Achievements', 'View your milestones', Colors.amber, () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const AchievementsScreen()));
-                    }),
-                    _buildMenuItem(Icons.security, 'Privacy & Security', 'Manage your privacy', Colors.blue, () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const PrivacyScreen()));
-                    }),
-                    _buildMenuItem(Icons.help_outline, 'Help & Support', 'Get assistance', Colors.green, () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const HelpScreen()));
-                    }),
-                    _buildMenuItem(Icons.info_outline, 'About', 'App information', Colors.purple, () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutScreen()));
-                    }),
-                  ],
-                ),
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  _buildMenuItem(Icons.emoji_events, 'Achievements', 'View your milestones', Colors.amber, () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const AchievementsScreen()));
+                  }),
+                  _buildMenuItem(Icons.security, 'Privacy & Security', 'Manage your privacy', Colors.blue, () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const PrivacyScreen()));
+                  }),
+                  _buildMenuItem(Icons.help_outline, 'Help & Support', 'Get assistance', Colors.green, () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const HelpScreen()));
+                  }),
+                  _buildMenuItem(Icons.info_outline, 'About', 'App information', Colors.purple, () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => const AboutScreen()));
+                  }),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
