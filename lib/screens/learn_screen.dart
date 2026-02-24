@@ -251,20 +251,21 @@ class CategoryDetailScreen extends StatelessWidget {
             pinned: true,
             backgroundColor: colors[0],
             flexibleSpace: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.only(left: 56, bottom: 16, right: 16),
-              title: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
+              centerTitle: true,
+              titlePadding: const EdgeInsets.only(bottom: 16),
+              title: Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.white,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withValues(alpha: 0.5),
+                      offset: const Offset(0, 2),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
               ),
               background: Stack(
@@ -279,9 +280,11 @@ class CategoryDetailScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Positioned(right: -30, top: 30, child: Icon(icon, size: 150, color: Colors.white.withValues(alpha: 0.1))),
+                  Positioned(left: -20, bottom: 20, child: Icon(Icons.stars, size: 100, color: Colors.white.withValues(alpha: 0.1))),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 40, bottom: 50),
+                      padding: const EdgeInsets.only(top: 40, bottom: 60),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
