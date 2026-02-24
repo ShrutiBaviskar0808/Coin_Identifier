@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/constants.dart';
+import '../models/coin_data.dart';
 import 'home_screen.dart';
 
 class CoinDetailsScreen extends StatelessWidget {
@@ -410,23 +412,40 @@ class CoinDetailsScreen extends StatelessWidget {
   }
 
   Map<String, dynamic> _getStaticCoinData() {
+    final random = Random();
+    final allCoins = CoinData.getAllCoins();
+    final randomCoin = allCoins[random.nextInt(allCoins.length)];
+    final confidence = 90 + random.nextInt(10);
+    
     return {
-      'confidence': '98% Match',
-      'name': 'American Silver Eagle',
-      'country': 'United States of America',
-      'year': '2023',
-      'mint': 'Philadelphia',
-      'composition': '99.9% Silver',
-      'weight': '31.101 g',
-      'diameter': '40.6 mm',
-      'thickness': '2.98 mm',
-      'edge': 'Reeded',
-      'description':
-          'The American Silver Eagle is the official silver bullion coin of the United States. It was first released in 1986 and is struck only in the one-troy ounce size, which has a nominal face value of one dollar and is guaranteed to contain one troy ounce of 99.9% pure silver.',
-      'value': '\$28.50',
-      'valueGood': '\$25',
-      'valueFine': '\$27',
-      'valueUncirculated': '\$32',
+      'confidence': '$confidence% Match',
+      'name': randomCoin.name,
+      'country': randomCoin.country,
+      'year': randomCoin.year,
+      'mint': _getMintName(randomCoin.country),
+      'composition': '${randomCoin.purity} ${randomCoin.metal}',
+      'weight': randomCoin.weight,
+      'diameter': randomCoin.diameter,
+      'thickness': '${(1.5 + random.nextDouble() * 2).toStringAsFixed(2)} mm',
+      'edge': random.nextBool() ? 'Reeded' : 'Plain',
+      'description': 'The ${randomCoin.name} is a distinguished coin from ${randomCoin.country}, minted in ${randomCoin.year}. This coin represents an important piece of numismatic history and is highly valued by collectors worldwide.',
+      'value': randomCoin.price,
+      'valueGood': _adjustPrice(randomCoin.price, -0.15),
+      'valueFine': _adjustPrice(randomCoin.price, -0.05),
+      'valueUncirculated': _adjustPrice(randomCoin.price, 0.15),
     };
+  }
+  
+  String _getMintName(String country) {
+    final mints = {'USA': ['Philadelphia', 'Denver', 'San Francisco'], 'Canada': ['Royal Canadian Mint'], 'UK': ['Royal Mint'], 'Australia': ['Perth Mint']};
+    final countryMints = mints[country] ?? ['National Mint'];
+    return countryMints[Random().nextInt(countryMints.length)];
+  }
+  
+  String _adjustPrice(String price, double factor) {
+    final numStr = price.replaceAll(RegExp(r'[^0-9.]'), '');
+    final num = double.tryParse(numStr) ?? 0;
+    final adjusted = num * (1 + factor);
+    return '\$${adjusted.toStringAsFixed(adjusted < 10 ? 2 : 0)}';
   }
 }
