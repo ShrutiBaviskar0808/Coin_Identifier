@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 import 'home_screen.dart';
 
@@ -43,6 +45,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            const BannerAds(),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Row(
@@ -72,17 +75,21 @@ class _CollectionScreenState extends State<CollectionScreen> {
                   ? const Center(child: CircularProgressIndicator())
                   : _coins.isEmpty
                       ? Center(child: Text('No coins found', style: GoogleFonts.poppins(color: AppColors.textGray)))
-                      : GridView.builder(
+                      : ListView(
                           padding: const EdgeInsets.symmetric(horizontal: 24),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                            childAspectRatio: 0.8,
-                          ),
-                          itemCount: _coins.length,
-                          itemBuilder: (context, index) {
-                            final coin = _coins[index];
+                          children: [
+                            GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                                childAspectRatio: 0.8,
+                              ),
+                              itemCount: _coins.length,
+                              itemBuilder: (context, index) {
+                                final coin = _coins[index];
                             return InkWell(
                               onTap: () => Navigator.push(
                                 context,
@@ -174,6 +181,11 @@ class _CollectionScreenState extends State<CollectionScreen> {
                             );
                           },
                         ),
+                        const SizedBox(height: 20),
+                        const NativeAdsWidgets(padding: 10),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
             ),
           ],
         ),

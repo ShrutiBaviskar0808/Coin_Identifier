@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/ads_service.dart';
 import '../utils/constants.dart';
 import 'result_screen.dart';
 import 'dart:async';
@@ -43,6 +44,7 @@ class _LoadingScreenState extends State<LoadingScreen> with SingleTickerProvider
 
     Future.delayed(const Duration(seconds: 4), () {
       if (mounted) {
+        AdsServices.showinterstitialAds();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => const ResultScreen()),

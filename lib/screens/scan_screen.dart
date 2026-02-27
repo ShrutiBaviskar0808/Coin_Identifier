@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/ads_service.dart';
 import '../utils/constants.dart';
 import 'coin_details_screen.dart';
 
@@ -78,6 +80,7 @@ class _ScanScreenState extends State<ScanScreen> {
     });
 
     if (_frontImage != null && _reverseImage != null) {
+      AdsServices.showinterstitialAds();
       Future.delayed(const Duration(milliseconds: 500), () {
         if (mounted) {
           Navigator.pushReplacement(
@@ -115,6 +118,12 @@ class _ScanScreenState extends State<ScanScreen> {
           CustomPaint(
             size: Size.infinite,
             painter: CircleOverlayPainter(),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top,
+            left: 0,
+            right: 0,
+            child: const BannerAds(),
           ),
           SafeArea(
             child: Column(

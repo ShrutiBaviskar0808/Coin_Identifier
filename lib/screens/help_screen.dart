@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 
 class HelpScreen extends StatelessWidget {
@@ -14,10 +16,14 @@ class HelpScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+      body: Column(
+        children: [
+          const BannerAds(),
+          Expanded(
+            child: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
             _buildContactCard('Email Support', 'support@coinidentifier.com', 'Get response within 24 hours', Icons.email, Colors.blue),
             _buildContactCard('Phone Support', '+1 (800) 123-4567', 'Available Mon-Fri, 9AM-6PM EST', Icons.phone, Colors.green),
             _buildContactCard('Live Chat', 'Chat with us now', 'Available 24/7 for instant help', Icons.chat_bubble, AppColors.gold),
@@ -28,10 +34,16 @@ class HelpScreen extends StatelessWidget {
             _buildFAQ('How accurate is the coin identification?', 'Our AI-powered system has over 95% accuracy rate. It uses advanced machine learning algorithms trained on millions of coin images from around the world.'),
             _buildFAQ('Can I use the app offline?', 'Basic features like viewing saved coins work offline. However, scanning new coins and accessing market values require an internet connection.'),
             _buildFAQ('How is the coin value calculated?', 'Coin values are based on real-time market data from multiple sources including auction houses, dealers, and online marketplaces. Values are updated daily.'),
+            const SizedBox(height: 20),
+            const NativeAdsWidgets(padding: 10),
+            const SizedBox(height: 20),
             _buildFAQ('Is my collection data backed up?', 'Yes, all your data is automatically backed up to secure cloud storage. You can access your collection from any device by logging in with your account.'),
             _buildFAQ('How do I delete my account?', 'Go to Profile > Privacy & Security > Delete Account. Please note this action is permanent and cannot be undone.'),
-          ],
-        ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

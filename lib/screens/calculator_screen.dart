@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
 import '../utils/constants.dart';
 
 class CalculatorScreen extends StatefulWidget {
@@ -24,15 +25,14 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text('Value Calculator', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+      body: Column(
+        children: [
+          const BannerAds(),
+          Expanded(
+            child: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -83,8 +83,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             _buildQuickCalc('Gold Coin (1 oz)', 2100),
             _buildQuickCalc('Silver Coin (1 oz)', 25),
             _buildQuickCalc('Rare Penny', 150),
-          ],
-        ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

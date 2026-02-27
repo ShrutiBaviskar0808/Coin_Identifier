@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 import '../models/coin_data.dart';
 import 'home_screen.dart';
@@ -33,6 +34,9 @@ class CoinDetailsScreen extends StatelessWidget {
                   children: [
                     _buildImageSection(),
                     _buildMainInfo(coinData),
+                    const SizedBox(height: 20),
+                    const NativeAdsWidgets(padding: 16),
+                    const SizedBox(height: 20),
                     _buildSpecifications(coinData),
                     _buildDescription(coinData),
                     _buildMarketValue(coinData),

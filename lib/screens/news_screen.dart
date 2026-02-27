@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
 import '../utils/constants.dart';
 
 class NewsScreen extends StatelessWidget {
@@ -9,23 +10,25 @@ class NewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text('Coin News', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+      body: Column(
+        children: [
+          const BannerAds(),
+          Expanded(
+            child: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
             _buildNewsCard('Rare 1943 Penny Sells for \$1.7 Million', 'A rare 1943 bronze Lincoln penny sold at auction for a record-breaking price. Only 20 are known to exist.', '2 hours ago', Icons.trending_up, Colors.green),
             _buildNewsCard('New Gold Coin Series Announced', 'The US Mint announces a new commemorative gold coin series celebrating American innovation.', '5 hours ago', Icons.new_releases, Colors.blue),
             _buildNewsCard('Ancient Roman Coins Discovered', 'Archaeologists uncover a treasure trove of Roman coins dating back to 300 AD in England.', '1 day ago', Icons.explore, Colors.orange),
             _buildNewsCard('Cryptocurrency Meets Physical Coins', 'New blockchain-backed physical coins combine traditional collecting with digital verification.', '2 days ago', Icons.currency_bitcoin, Colors.purple),
             _buildNewsCard('Coin Grading Standards Updated', 'PCGS announces updated grading standards for better consistency in coin authentication.', '3 days ago', Icons.update, AppColors.gold),
             _buildNewsCard('Record Attendance at Coin Show', 'The annual World Coin Fair sees record-breaking attendance with over 50,000 visitors.', '4 days ago', Icons.people, Colors.red),
-          ],
-        ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

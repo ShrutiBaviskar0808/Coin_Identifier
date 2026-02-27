@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 
 
@@ -60,102 +62,111 @@ class _ResultScreenState extends State<ResultScreen> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      icon: const Icon(Icons.share_outlined),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: AnimatedBuilder(
-                    animation: _controller,
-                    builder: (context, child) {
-                      return Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.identity()
-                          ..setEntry(3, 2, 0.001)
-                          ..rotateY(_controller.value * 2 * pi),
-                        child: Container(
-                          width: 180,
-                          height: 180,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: AppColors.goldGradient,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.gold.withValues(alpha: 0.4),
-                                blurRadius: 40,
-                                offset: const Offset(0, 20),
-                              ),
-                            ],
+        child: Column(
+          children: [
+            const BannerAds(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            onPressed: () => Navigator.pop(context),
                           ),
-                          child: const Center(
-                            child: Icon(Icons.monetization_on, size: 90, color: Colors.white),
+                          const Spacer(),
+                          IconButton(
+                            icon: const Icon(Icons.share_outlined),
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: AnimatedBuilder(
+                          animation: _controller,
+                          builder: (context, child) {
+                            return Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.identity()
+                                ..setEntry(3, 2, 0.001)
+                                ..rotateY(_controller.value * 2 * pi),
+                              child: Container(
+                                width: 180,
+                                height: 180,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: AppColors.goldGradient,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.gold.withValues(alpha: 0.4),
+                                      blurRadius: 40,
+                                      offset: const Offset(0, 20),
+                                    ),
+                                  ],
+                                ),
+                                child: const Center(
+                                  child: Icon(Icons.monetization_on, size: 90, color: Colors.white),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      Center(
+                        child: Text(
+                          widget.coinName,
+                          style: GoogleFonts.poppins(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textDark,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Center(
+                        child: Text(
+                          widget.country,
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            color: AppColors.textGray,
                           ),
                         ),
-                      );
-                    },
+                      ),
+                      const SizedBox(height: 4),
+                      Center(
+                        child: Text(
+                          'Year: ${widget.year}',
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: AppColors.textGray,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      _buildValueCard(),
+                      const SizedBox(height: 20),
+                      _buildInfoRow(),
+                      const SizedBox(height: 20),
+                      const NativeAdsWidgets(padding: 10),
+                      const SizedBox(height: 20),
+                      _buildDetailsSection(),
+                      const SizedBox(height: 20),
+                      _buildHistorySection(),
+                      const SizedBox(height: 30),
+                      _buildActionButtons(),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 30),
-                Center(
-                  child: Text(
-                    widget.coinName,
-                    style: GoogleFonts.poppins(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textDark,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Center(
-                  child: Text(
-                    widget.country,
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      color: AppColors.textGray,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Center(
-                  child: Text(
-                    'Year: ${widget.year}',
-                    style: GoogleFonts.poppins(
-                      fontSize: 14,
-                      color: AppColors.textGray,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                _buildValueCard(),
-                const SizedBox(height: 20),
-                _buildInfoRow(),
-                const SizedBox(height: 20),
-                _buildDetailsSection(),
-                const SizedBox(height: 20),
-                _buildHistorySection(),
-                const SizedBox(height: 30),
-                _buildActionButtons(),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

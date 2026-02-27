@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 import 'achievements_screen.dart';
 import 'privacy_screen.dart';
@@ -16,6 +18,7 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const BannerAds(),
             Container(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top + 24,
@@ -76,6 +79,8 @@ class ProfileScreen extends StatelessWidget {
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
+                  const NativeAdsWidgets(padding: 10),
+                  const SizedBox(height: 20),
                   _buildMenuItem(Icons.emoji_events, 'Achievements', 'View your milestones', Colors.amber, () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) => const AchievementsScreen()));
                   }),

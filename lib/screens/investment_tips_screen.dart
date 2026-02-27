@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 
 class InvestmentTipsScreen extends StatelessWidget {
@@ -59,6 +60,9 @@ class InvestmentTipsScreen extends StatelessWidget {
                 _buildTipCard('Store Properly', 'Use proper holders, avoid PVC, control humidity. Poor storage can damage valuable coins.', Icons.inventory, Colors.brown),
                 _buildTipCard('Think Long-Term', 'Coin collecting is a marathon, not a sprint. The best returns come from patience and strategic buying.', Icons.trending_up, Colors.purple),
                 _buildTipCard('Document Everything', 'Keep detailed records of purchases, including receipts, certificates, and photos. Essential for insurance and resale.', Icons.description, Colors.red),
+                const SizedBox(height: 20),
+                const NativeAdsWidgets(padding: 16),
+                const SizedBox(height: 20),
                 _buildTipCard('Join Collector Communities', 'Network with other collectors, attend coin shows, join clubs. Learn from experienced collectors.', Icons.groups, Colors.cyan),
               ]),
             ),

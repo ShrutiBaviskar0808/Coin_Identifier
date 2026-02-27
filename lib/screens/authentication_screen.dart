@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
 import '../utils/constants.dart';
 
 class AuthenticationScreen extends StatelessWidget {
@@ -9,7 +10,11 @@ class AuthenticationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: CustomScrollView(
+      body: Column(
+        children: [
+          const BannerAds(),
+          Expanded(
+            child: CustomScrollView(
         slivers: [
           SliverAppBar(
             expandedHeight: 200,
@@ -60,6 +65,9 @@ class AuthenticationScreen extends StatelessWidget {
                 _buildGuideCard('Professional Grading', 'For valuable coins, always get professional authentication from PCGS, NGC, or ANACS.', Icons.verified, AppColors.gold),
               ]),
             ),
+          ),
+        ],
+      ),
           ),
         ],
       ),

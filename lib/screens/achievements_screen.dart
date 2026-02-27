@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 
 class AchievementsScreen extends StatelessWidget {
@@ -14,10 +16,14 @@ class AchievementsScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+      body: Column(
+        children: [
+          const BannerAds(),
+          Expanded(
+            child: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
             _buildProgressCard(),
             const SizedBox(height: 20),
             Text('Unlocked Badges', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark)),
@@ -26,14 +32,19 @@ class AchievementsScreen extends StatelessWidget {
             _buildAchievementItem('Collector', 'Saved 10 coins', '💎', true, Colors.blue),
             _buildAchievementItem('Expert', 'Scanned 50 coins', '🏆', true, AppColors.gold),
             const SizedBox(height: 20),
+            const NativeAdsWidgets(padding: 10),
+            const SizedBox(height: 20),
             Text('Locked Badges', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark)),
             const SizedBox(height: 16),
             _buildAchievementItem('Master', 'Scan 100 coins', '👑', false, Colors.grey),
             _buildAchievementItem('Historian', 'Learn about 20 ancient coins', '📜', false, Colors.grey),
             _buildAchievementItem('Trader', 'Check market value 30 times', '💰', false, Colors.grey),
             _buildAchievementItem('Scholar', 'Complete all quizzes', '🎓', false, Colors.grey),
-          ],
-        ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

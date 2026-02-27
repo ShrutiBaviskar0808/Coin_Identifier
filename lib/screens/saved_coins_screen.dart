@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
 import '../utils/constants.dart';
 
 class SavedCoinsScreen extends StatelessWidget {
@@ -15,13 +16,12 @@ class SavedCoinsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text('Saved Coins', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: savedCoins.isEmpty
+      body: Column(
+        children: [
+          const BannerAds(),
+          Expanded(
+            child: SafeArea(
+              child: savedCoins.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -125,9 +125,11 @@ class SavedCoinsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                );
-              },
+                );              },
             ),
+            ),
+          ),
+        ],
       ),
     );
   }

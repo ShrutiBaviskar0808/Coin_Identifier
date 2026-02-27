@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 
 class MarketScreen extends StatelessWidget {
@@ -11,6 +13,7 @@ class MarketScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+            const BannerAds(),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: Row(
@@ -40,6 +43,8 @@ class MarketScreen extends StatelessWidget {
                   _buildMarketCard('Silver', '-0.8%', '\$25/oz', false, '\$26', '\$24.50', '52-Week: \$20 - \$28'),
                   const SizedBox(height: 16),
                   _buildMarketCard('Platinum', '+1.2%', '\$1,050/oz', true, '\$1,030', '\$1,065', '52-Week: \$900 - \$1,100'),
+                  const SizedBox(height: 24),
+                  const NativeAdsWidgets(padding: 10),
                   const SizedBox(height: 24),
                   Text('Trending Coins', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark)),
                   const SizedBox(height: 12),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 
 class LearnScreen extends StatelessWidget {
@@ -9,28 +11,32 @@ class LearnScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text('Learn & Explore', style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            _buildDailyQuizCard(context),
-            const SizedBox(height: 20),
-            _buildTerminologyCard(context),
-            const SizedBox(height: 20),
-            Text('Explore Categories', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
-            const SizedBox(height: 16),
-            _buildCategoryCard(context, 'Ancient Coins', 'Discover coins from ancient civilizations', Icons.history_edu, 'ancient'),
+      body: Column(
+        children: [
+          const BannerAds(),
+          Expanded(
+            child: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  _buildDailyQuizCard(context),
+                  const SizedBox(height: 20),
+                  _buildTerminologyCard(context),
+                  const SizedBox(height: 20),
+                  const NativeAdsWidgets(padding: 10),
+                  const SizedBox(height: 20),
+                  Text('Explore Categories', style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                  const SizedBox(height: 16),
+                  _buildCategoryCard(context, 'Ancient Coins', 'Discover coins from ancient civilizations', Icons.history_edu, 'ancient'),
             _buildCategoryCard(context, 'Gold Coins', 'Explore valuable gold coin collections', Icons.monetization_on, 'gold'),
             _buildCategoryCard(context, 'Rare Coins', 'Learn about the rarest coins in history', Icons.diamond, 'rare'),
             _buildCategoryCard(context, 'Error Coins', 'Fascinating minting mistakes and errors', Icons.error_outline, 'error'),
             _buildCategoryCard(context, 'Most Expensive Coins', 'The world\'s most valuable coins', Icons.attach_money, 'expensive'),
-          ],
-        ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

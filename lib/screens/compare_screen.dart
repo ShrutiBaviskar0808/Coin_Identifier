@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 import '../models/coin_data.dart';
 
@@ -31,10 +33,14 @@ class _CompareScreenState extends State<CompareScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+      body: Column(
+        children: [
+          const BannerAds(),
+          Expanded(
+            child: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -70,10 +76,15 @@ class _CompareScreenState extends State<CompareScreen> {
               _buildComparisonRow('Country', selectedCoin1!.country, selectedCoin2!.country, Colors.red),
               _buildComparisonRow('Metal', selectedCoin1!.metal, selectedCoin2!.metal, Colors.amber),
               const SizedBox(height: 20),
+              const NativeAdsWidgets(padding: 10),
+              const SizedBox(height: 20),
               _buildSummaryCard(),
             ],
-          ],
-        ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

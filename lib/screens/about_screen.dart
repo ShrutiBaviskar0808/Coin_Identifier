@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
 import '../utils/constants.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -14,10 +16,14 @@ class AboutScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+      body: Column(
+        children: [
+          const BannerAds(),
+          Expanded(
+            child: SafeArea(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
@@ -44,6 +50,9 @@ class AboutScreen extends StatelessWidget {
             _buildInfoSection('About the App', 'Coin Identifier is your ultimate companion for identifying, collecting, and learning about coins from around the world. Using advanced AI technology and a comprehensive database of over 100,000 coins, we help collectors, enthusiasts, and curious minds discover the fascinating world of numismatics.'),
             _buildFeaturesList(),
             _buildInfoSection('Our Mission', 'To make coin collecting accessible and enjoyable for everyone. We believe that every coin tells a story, and our mission is to help you discover those stories through cutting-edge technology and educational resources.'),
+            const SizedBox(height: 20),
+            const NativeAdsWidgets(padding: 10),
+            const SizedBox(height: 20),
             _buildInfoSection('Technology', 'Our app uses state-of-the-art machine learning algorithms trained on millions of coin images. The AI model continuously learns and improves, ensuring accurate identification of coins from different eras, countries, and conditions.'),
             _buildInfoSection('Database', 'Our extensive database includes:\n\n• Ancient coins from civilizations dating back 2,500 years\n• Modern coins from over 195 countries\n• Commemorative and special edition coins\n• Error coins and rare variants\n• Historical context and market values'),
             Container(
@@ -63,8 +72,11 @@ class AboutScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-        ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

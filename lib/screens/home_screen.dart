@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../ads/banner_ads_widget.dart';
+import '../ads/native_ads_widget.dart';
+import '../ads/ads_service.dart';
 import '../utils/constants.dart';
 import 'scan_screen.dart';
 import 'collection_screen.dart';
@@ -26,6 +29,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  int _screenChanges = 0;
 
   final List<Widget> _screens = [
     const _HomeContent(),
@@ -35,6 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   Future<void> _onTabTapped(int index) async {
+    _screenChanges++;
+    if (_screenChanges % 3 == 0) {
+      AdsServices.showinterstitialAds();
+    }
+    
     if (index == 1) {
       final status = await Permission.camera.request();
       if (status.isGranted) {
@@ -61,32 +70,38 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha:0.1),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const BannerAds(),
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha:0.1),
+                  blurRadius: 20,
+                  offset: const Offset(0, -5),
+                ),
+              ],
             ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: _onTabTapped,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: AppColors.gold,
-          unselectedItemColor: AppColors.textGray,
-          selectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-          unselectedLabelStyle: GoogleFonts.poppins(),
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: 'Scan'),
-            BottomNavigationBarItem(icon: Icon(Icons.collections), label: 'Collection'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          ],
-        ),
+            child: BottomNavigationBar(
+              currentIndex: _selectedIndex,
+              onTap: _onTabTapped,
+              type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.white,
+              selectedItemColor: AppColors.gold,
+              unselectedItemColor: AppColors.textGray,
+              selectedLabelStyle: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+              unselectedLabelStyle: GoogleFonts.poppins(),
+              items: const [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: 'Scan'),
+                BottomNavigationBarItem(icon: Icon(Icons.collections), label: 'Collection'),
+                BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -127,6 +142,8 @@ class _HomeContent extends StatelessWidget {
               _buildTrendingSection(context),
               const SizedBox(height: 24),
               _buildLiveMarketTicker(),
+              const SizedBox(height: 20),
+              const NativeAdsWidgets(padding: 10),
               const SizedBox(height: 30),
               Text(
                 'Quick Actions',
